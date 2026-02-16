@@ -49,7 +49,7 @@
 
   # Bluetooth
   hardware.bluetooth = {
-    enable = false;
+    enable = true;
     powerOnBoot = true;
 
     settings = {
@@ -64,7 +64,7 @@
   };
 
   # Printing (CUPS)
-  services.printing.enable = false;
+  services.printing.enable = true;
 
   # Sound (Pipewire)
   services.pulseaudio.enable = false;
@@ -84,24 +84,17 @@
       isNormalUser = true;
       description = "Raquel";
       extraGroups = [
-        "networkmanager"
         "wheel"
+        "networkmanager"
       ];
-      packages = with pkgs; [
-        kdePackages.kate
-        kitty
-      ];
+      packages = with pkgs; [];
     };
   };
 
   #
-  # Programs
-  #
-  programs.firefox.enable = true;
-
-  #
   # Nix
   #
+  nix.channel.enable = false;
   nixpkgs.config.allowUnfree = true;
   nix.settings.experimental-features = [
     "nix-command"

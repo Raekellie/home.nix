@@ -26,6 +26,7 @@
             ./hosts/nixos/configuration.nix
             ./modules/system/shell.nix
             ./modules/system/desktop.nix
+            ./modules/system/art.nix
 
             home-manager.nixosModules.home-manager
             {
@@ -39,4 +40,4 @@
         };
       };
     };
-}
+  }

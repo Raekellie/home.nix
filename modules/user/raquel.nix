@@ -17,8 +17,10 @@
   # '';
 
   imports = [
-    ./dev.nix
     ./shell.nix
+    ./dev.nix
+    ./gaming.nix
+    ./desktop.nix
   ];
 
   # This value determines the home Manager release that your
