@@ -15,7 +15,8 @@
   boot.loader.grub.useOSProber = true;
 
   # Kernel
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  #boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages_zen;
 
   # Locale
   time.timeZone = "Europe/Lisbon";
@@ -63,6 +64,7 @@
       extraGroups = [
         "wheel"
         "networkmanager"
+        "vboxsf"
       ];
       packages = with pkgs; [];
     };
