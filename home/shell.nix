@@ -1,6 +1,17 @@
 { config, pkgs, ... }:
 
 {
+  programs.zsh = {
+    enable = true;
+    historySubstringSearch.enable = true;
+    autosuggestion.enable = true;
+    syntaxHighlighting.enable = true;
+
+    shellAliases = {
+      "nixswitch" = "sudo nixos-rebuild switch --flake ~/nixos-config";
+    };
+  };
+
   programs.git = {
     enable = true;
     settings = {
@@ -12,5 +23,5 @@
     };
   };
 
-  home.packages = with pkgs; [];
+  home.packages = with pkgs; [ ];
 }

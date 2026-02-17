@@ -9,6 +9,17 @@
     preferences = {
       "widget.use-xdg-desktop-portal.file-picker" = 1;
     };
+    policies = {
+      DisableTelemetry = true;
+      DisableFirefoxStudies = true;
+      EnableTrackingProtection = {
+        Value = true;
+        Locked = true;
+        Cryptomining = true;
+        Fingerprinting = true;
+      };
+      DisablePocket = true;
+    };
   };
 
   services.qbittorrent.enable = true;
@@ -30,7 +41,6 @@
   };
 
   environment.systemPackages = with pkgs; [
-    # General (TODO: split this up into its own file if I ever switch to another DE)
     wl-clipboard
     kitty
     hardinfo2
@@ -51,7 +61,5 @@
     noto-fonts-color-emoji
     liberation_ttf
     dejavu_fonts
-
-    nerd-fonts.iosevka
   ];
 }

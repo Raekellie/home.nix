@@ -10,9 +10,6 @@
     XDG_DATA_HOME   = "$HOME/.local/share";
     XDG_STATE_HOME  = "$HOME/.local/state";
     XDG_CACHE_HOME  = "$HOME/.cache";
-
-    DOTFILES        = "${inputs.dotfiles}";
-    ZDOTDIR         = "${inputs.dotfiles}/config/zsh";
   };
 
   environment.systemPackages = with pkgs; [

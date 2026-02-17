@@ -1,10 +1,12 @@
 { config, pkgs, ... }:
 
 {
-  services.desktopManager.plasma6.enable = true;
-  services.displayManager.sddm = {
-    enable = true;
-    wayland.enable = true;
+  services = {
+    desktopManager.plasma6.enable = true;
+    displayManager.sddm = {
+      enable = true;
+      wayland.enable = true;
+    };
   };
 
   xdg = {
@@ -17,15 +19,16 @@
   };
 
   environment.systemPackages = with pkgs; [
-    kdePackages.discover # Flatpak store
+    kdePackages.discover # Store (useful for flatpaks)
     kdePackages.kcalc
     kdePackages.kcharselect # Special character selector
     kdePackages.kclock
     kdePackages.kcolorchooser # Colour picker
     kdePackages.kolourpaint # Paint
-    kdePackages.ksystemlog # KDE SystemLog Application
+    kdePackages.ksystemlog # System log viewer
     kdePackages.sddm-kcm # Configuration module for SDDM
     kdePackages.kate
+    kdePackages.filelight # Disk space usage visualiser
 
     kdiff3 # Compares and merges 2 or 3 files or directories
 

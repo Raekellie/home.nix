@@ -5,18 +5,6 @@
   home.homeDirectory = "/home/raquel";
   xdg.enable = true;
 
-  # home.file.".config/i3/wallpaper.jpg".source = ./wallpaper.jpg;
-  # home.file.".config/i3/scripts" = {
-  #   source = ./scripts;
-  #   recursive = true;   # link recursively
-  #   executable = true;  # make all files executable
-  # };
-
-  # encode the file content in nix configuration file directly
-  # home.file.".xxx".text = ''
-  #     xxx
-  # '';
-
   imports = [
     ./dotfiles.nix
     ./shell.nix

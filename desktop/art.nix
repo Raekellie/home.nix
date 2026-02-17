@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  #hardware.opentabletdriver.enable = true;
+  hardware.opentabletdriver.enable = false;
 
   environment.systemPackages = with pkgs; [
     #blender-hip
