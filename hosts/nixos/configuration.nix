@@ -32,13 +32,6 @@
     LC_TIME = "pt_PT.UTF-8";
   };
 
-  # Desktop Environment
-  services.desktopManager.plasma6.enable = true;
-  services.displayManager.sddm = {
-    enable = true;
-    wayland.enable = true;
-  };
-
   #
   # Connectivity
   #
@@ -46,22 +39,6 @@
   # Networking
   networking.hostName = "nixos";
   networking.networkmanager.enable = true;
-
-  # Bluetooth
-  hardware.bluetooth = {
-    enable = true;
-    powerOnBoot = true;
-
-    settings = {
-      General = {
-        Experimental = true;
-        FastConnectable = true;
-      };
-      Policy = {
-        AutoEnable = true;
-      };
-    };
-  };
 
   # Printing (CUPS)
   services.printing.enable = true;
@@ -96,6 +73,7 @@
   #
   nix.channel.enable = false;
   nixpkgs.config.allowUnfree = true;
+  nix.settings.use-xdg-base-directories = true;
   nix.settings.experimental-features = [
     "nix-command"
     "flakes"

@@ -3,9 +3,15 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
+
     home-manager = {
       url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    dotfiles = {
+      url = "github:Raekellie/dotfiles";
+      flake = false;
     };
   };
 
@@ -24,15 +30,14 @@
 
           modules = [
             ./hosts/nixos/configuration.nix
-            ./modules/system/shell.nix
-            ./modules/system/desktop.nix
-            ./modules/system/art.nix
+            ./core/shell.nix
+            ./desktop
 
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.users."raquel" = ./modules/user/raquel.nix;
+              home-manager.users."raquel" = ./home/raquel.nix;
 
               home-manager.extraSpecialArgs = { inherit inputs; };
             }

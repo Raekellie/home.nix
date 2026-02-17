@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ inputs, config, pkgs, ... }:
 
 {
   programs.bash.enable = true;
@@ -7,16 +7,12 @@
 
   environment.sessionVariables = rec {
     XDG_CONFIG_HOME = "$HOME/.config";
-    XDG_CACHE_HOME  = "$HOME/.cache";
     XDG_DATA_HOME   = "$HOME/.local/share";
     XDG_STATE_HOME  = "$HOME/.local/state";
+    XDG_CACHE_HOME  = "$HOME/.cache";
 
-    # FIXME: Incorporate my dotfiles repo within this one so as to make this 100% reproducible
-    DOTFILES        = " $XDG_CONFIG_HOME/dotfiles";
-
-    PATH = [
-      "${DOTFILES}/environment/path"
-    ];
+    DOTFILES        = "${inputs.dotfiles}";
+    ZDOTDIR         = "${inputs.dotfiles}/config/zsh";
   };
 
   environment.systemPackages = with pkgs; [
@@ -33,13 +29,14 @@
     git
     curl
     wget
+    jq
 
     starship
     ripgrep
+    fd
     bat
     eza
     fzf
-    jq
 
     # File management
     ranger

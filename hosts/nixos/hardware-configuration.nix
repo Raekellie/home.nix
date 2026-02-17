@@ -13,11 +13,11 @@
 
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/9003a410-9bf0-478b-ae56-727cfce965f3";
-      fsType = "ext4";
-    };
+    fsType = "ext4";
+  };
 
   swapDevices = [ ];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  virtualisation.virtualbox.guest.enable = true;
+  #virtualisation.virtualbox.guest.enable = true;
 }

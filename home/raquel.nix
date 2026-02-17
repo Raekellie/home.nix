@@ -3,6 +3,7 @@
 {
   home.username = "raquel";
   home.homeDirectory = "/home/raquel";
+  xdg.enable = true;
 
   # home.file.".config/i3/wallpaper.jpg".source = ./wallpaper.jpg;
   # home.file.".config/i3/scripts" = {
@@ -17,9 +18,9 @@
   # '';
 
   imports = [
+    ./dotfiles.nix
     ./shell.nix
     ./dev.nix
-    ./gaming.nix
     ./desktop.nix
   ];
 
