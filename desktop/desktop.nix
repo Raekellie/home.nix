@@ -41,11 +41,13 @@
   };
 
   environment.systemPackages = with pkgs; [
-    wl-clipboard
+    # General tools
     kitty
+    wl-clipboard
     hardinfo2
     wayland-utils
 
+    # E-reader
     calibre
 
     # Libreoffice

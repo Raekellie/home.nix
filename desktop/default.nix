@@ -1,9 +1,9 @@
-{ config, pkgs, ... }:
+{ ... }:
 
 {
   imports = [
-    ./kde.nix
     ./desktop.nix
+    ./kde.nix
     ./art.nix
     ./dev.nix
     ./gaming.nix

@@ -25,13 +25,13 @@
     {
       nixosConfigurations = {
         "nixos" = nixpkgs.lib.nixosSystem {
-          system = "x86-64-linux";
+          #system = "x86-64-linux";
           specialArgs = { inherit inputs; };
 
           modules = [
-            ./hosts/nixos/configuration.nix
-            ./core/shell.nix
+            ./core
             ./desktop
+            ./hosts/nixos/configuration.nix
 
             home-manager.nixosModules.home-manager
             {
