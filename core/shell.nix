@@ -1,4 +1,9 @@
-{ inputs, config, pkgs, ... }:
+{
+  inputs,
+  config,
+  pkgs,
+  ...
+}:
 
 {
   programs.bash.enable = true;
@@ -7,9 +12,9 @@
 
   environment.sessionVariables = rec {
     XDG_CONFIG_HOME = "$HOME/.config";
-    XDG_DATA_HOME   = "$HOME/.local/share";
-    XDG_STATE_HOME  = "$HOME/.local/state";
-    XDG_CACHE_HOME  = "$HOME/.cache";
+    XDG_DATA_HOME = "$HOME/.local/share";
+    XDG_STATE_HOME = "$HOME/.local/state";
+    XDG_CACHE_HOME = "$HOME/.cache";
   };
 
   environment.systemPackages = with pkgs; [
@@ -39,7 +44,7 @@
     ranger
 
     zip
-    unzip
+    libarchive # bsdtar
     gnutar
     xz
     gzip
