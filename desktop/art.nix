@@ -4,7 +4,7 @@
   hardware.opentabletdriver.enable = false;
 
   environment.systemPackages = with pkgs; [
-    #blender-hip
+    #blender
     #krita
     #digikam
     #aseprite

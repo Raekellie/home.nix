@@ -7,5 +7,6 @@
     ./art.nix
     ./dev.nix
     ./gaming.nix
+    ./autologin.nix
   ];
 }

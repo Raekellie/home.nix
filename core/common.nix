@@ -17,9 +17,8 @@
     # Storage optimisations
     optimise.automatic = true;
 
-    # Currently using `nh clean` instead for garbage collection: see `programs.nh` below
     gc = {
-      automatic = false;
+      automatic = true;
       dates = "weekly";
       options = "--delete-older-than 7d";
     };
@@ -31,10 +30,17 @@
   # nh
   #
   programs.nh = {
-    enable = true;
-    clean.enable = true;
+    enable = false;
+    clean.enable = false;
     clean.extraArgs = "--keep-since 7d --keep 3";
     flake = "$HOME/nixos-config";
+  };
+
+  #
+  # Services
+  #
+  services = {
+    fstrim.enable = true;
   };
 
   #

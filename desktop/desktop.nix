@@ -6,8 +6,12 @@
 
   programs.firefox = {
     enable = true;
+    # Reference: https://mozilla.github.io/policy-templates/#preferences
+    # List of about:config options: https://searchfox.org/firefox-main/source/browser/components/StartupTelemetry.sys.mjs#363
     preferences = {
       "widget.use-xdg-desktop-portal.file-picker" = 1;
+
+      "browser.ai.control.default" = "blocked";
     };
     policies = {
       DisableTelemetry = true;
@@ -47,8 +51,16 @@
     hardinfo2
     wayland-utils
 
+    qalculate-qt
+
+    # Multimedia
+    mpv
+
     # E-reader
     calibre
+
+    # Alternative Chromium-based browser for the rare times I need it
+    vivaldi
 
     # Libreoffice
     libreoffice-qt-fresh
