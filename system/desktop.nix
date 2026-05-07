@@ -26,11 +26,11 @@
     };
   };
 
-  services.qbittorrent.enable = true;
+  services.qbittorrent.enable = false;
 
   # Bluetooth
   hardware.bluetooth = {
-    enable = true;
+    enable = false;
     powerOnBoot = true;
 
     settings = {
@@ -54,13 +54,13 @@
     qalculate-qt
 
     # Multimedia
-    mpv
+    #mpv
 
     # E-reader
-    calibre
+    #calibre
 
-    # Alternative Chromium-based browser for the rare times I need it
-    vivaldi
+    # For the sad times in which I'm forced to use a Blink based browser (WebUSB...)
+    ungoogled-chromium
 
     # Libreoffice
     libreoffice-qt-fresh
@@ -79,6 +79,5 @@
 
     iosevka
     nerd-fonts.symbols-only
-
   ];
 }

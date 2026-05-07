@@ -6,16 +6,13 @@
 }:
 
 {
-  programs.bash.enable = true;
-  programs.zsh.enable = true;
-  users.defaultUserShell = pkgs.zsh;
-
-  environment.sessionVariables = rec {
-    XDG_CONFIG_HOME = "$HOME/.config";
-    XDG_DATA_HOME = "$HOME/.local/share";
-    XDG_STATE_HOME = "$HOME/.local/state";
-    XDG_CACHE_HOME = "$HOME/.cache";
-  };
+  # TODO: these declarations are useful but don't belong in this file
+  #environment.sessionVariables = rec {
+  #  XDG_CONFIG_HOME = "$HOME/.config";
+  #  XDG_DATA_HOME = "$HOME/.local/share";
+  #  XDG_STATE_HOME = "$HOME/.local/state";
+  #  XDG_CACHE_HOME = "$HOME/.cache";
+  #};
 
   environment.systemPackages = with pkgs; [
     # Editors

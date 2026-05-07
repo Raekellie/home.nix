@@ -2,6 +2,17 @@
 
 {
   #
+  # Core options
+  #
+
+  # Security
+  security.sudo.execWheelOnly = true;
+
+  # RAM
+  zramSwap.enable = true;
+  systemd.oomd.enable = true;
+
+  #
   # Nix
   #
   nix = {
@@ -23,8 +34,6 @@
       options = "--delete-older-than 7d";
     };
   };
-
-  nixpkgs.config.allowUnfree = true;
 
   #
   # nh
@@ -66,6 +75,7 @@
   # Base firewall setings
   #
   networking = {
+    # cf. https://search.nixos.org/options?channel=unstable&query=networking.nftables.enable
     nftables.enable = true;
     firewall = {
       enable = true;

@@ -2,11 +2,20 @@
   description = "My lovely machines under Nix :3";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
+    # Temporarily set to unstable to have the stateVersion be 26.05 (releasing in a few weeks)
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    #nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.11";
+      url = "github:nix-community/home-manager";
+      #url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    impermanence = {
+      url = "github:nix-community/impermanence";
+      inputs.nixpkgs.follows = "";
+      inputs.home-manager.follows = "";
     };
 
     dotfiles = {
@@ -20,6 +29,7 @@
       self,
       nixpkgs,
       home-manager,
+      impermanence,
       ...
     }@inputs:
     {
@@ -29,8 +39,9 @@
           specialArgs = { inherit inputs; };
 
           modules = [
-            ./core
-            ./desktop
+            impermanence.nixosModules.impermanence
+            ./system
+            ./hosts/impermanence.nix
             ./hosts/nixos/configuration.nix
 
             home-manager.nixosModules.home-manager

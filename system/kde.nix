@@ -3,9 +3,12 @@
 {
   services = {
     desktopManager.plasma6.enable = true;
-    displayManager.sddm = {
-      enable = true;
-      wayland.enable = true;
+    displayManager = {
+      autoLogin.user = "raquel"; # FIXME: clean up this ugly hardcoding
+      sddm = {
+        enable = true;
+        wayland.enable = true;
+      };
     };
   };
 
@@ -19,9 +22,9 @@
   };
 
   environment.systemPackages = with pkgs; [
-    kdePackages.discover # Store (useful for flatpaks)
+    kdePackages.discover # Software center (useful for flatpaks)
     kdePackages.kcalc
-    kdePackages.kcharselect # Special character selector
+    kdePackages.kcharselect # Special character picker
     kdePackages.kclock
     kdePackages.kcolorchooser # Colour picker
     kdePackages.kolourpaint # Paint

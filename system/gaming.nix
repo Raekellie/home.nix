@@ -1,4 +1,8 @@
-{ config, pkgs, ... }:
+{
+  nixpkgs,
+  pkgs,
+  ...
+}:
 
 {
 
@@ -6,7 +10,7 @@
   boot.kernelModules = [ "ntsync" ];
 
   programs.steam = {
-    enable = false;
+    enable = true;
     remotePlay.openFirewall = true;
     extraCompatPackages = with pkgs; [
       proton-ge-bin
@@ -29,5 +33,11 @@
 
     #prismlauncher
     #openjdk-minimal-jre
+  ];
+
+  # https://github.com/NixOS/nixpkgs/pull/396595
+  nixpkgs.config.allowUnfreePackages = [
+    "steam"
+    "steam-unwrapped"
   ];
 }
