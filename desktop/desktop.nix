@@ -70,10 +70,15 @@
   ];
 
   fonts.packages = with pkgs; [
+    liberation_ttf
+    dejavu_fonts
+
     noto-fonts
     noto-fonts-cjk-sans
     noto-fonts-color-emoji
-    liberation_ttf
-    dejavu_fonts
+
+    iosevka
+    nerd-fonts.symbols-only
+
   ];
 }
