@@ -8,6 +8,7 @@
   imports = [
     ./hardware-configuration.nix
     ../common.nix
+    ../sops.nix
     ../../system
   ];
 
@@ -53,7 +54,10 @@
         "networkmanager"
         "vboxsf"
       ];
-      initialHashedPassword = "$y$j9T$gz9hkJj1RWXS79j7Ra8uP0$0e6zKY678xn5jncOpWaPg6IhGBJCADttT5oFZg36Sj3";
+      openssh.authorizedKeys.keys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBC2ym8cwJrrOR08Fw+nJl6p/8tTESltZRbnMLaNfA72 raquel@mermaid"
+      ];
+      hashedPasswordFile = config.sops.secrets.initialHashedPassword.path;
       packages = with pkgs; [ ];
     };
   };
@@ -65,9 +69,6 @@
   #   enable = true;
   #   enableSSHSupport = true;
   # };
-
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
 
   # Read the docs/release notes before changing this value
   # (man configuration.nix, https://nixos.org/nixos/options.html, https://nixos.org/manual/nixos/stable/release-notes)

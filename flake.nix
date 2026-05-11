@@ -12,6 +12,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     impermanence = {
       url = "github:nix-community/impermanence";
       inputs.nixpkgs.follows = "";
@@ -29,6 +34,7 @@
       self,
       nixpkgs,
       home-manager,
+      sops-nix,
       impermanence,
       ...
     }@inputs:
@@ -39,6 +45,7 @@
           specialArgs = { inherit inputs; };
 
           modules = [
+            #sops-nix.nixosModules.sops # Currently seeing how loading it after feels in terms of cleanliness
             impermanence.nixosModules.impermanence
             ./hosts/nixos
 
