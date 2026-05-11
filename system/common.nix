@@ -1,20 +1,11 @@
 { config, pkgs, ... }:
 
 {
-  #
-  # Core options
-  #
-
-  # Security
   security.sudo.execWheelOnly = true;
 
-  # RAM
   zramSwap.enable = true;
   systemd.oomd.enable = true;
 
-  #
-  # Nix
-  #
   nix = {
     channel.enable = false;
 
@@ -25,9 +16,8 @@
         "flakes"
       ];
     };
-    # Storage optimisations
-    optimise.automatic = true;
 
+    optimise.automatic = true;
     gc = {
       automatic = true;
       dates = "weekly";
@@ -35,26 +25,10 @@
     };
   };
 
-  #
-  # nh
-  #
-  programs.nh = {
-    enable = false;
-    clean.enable = false;
-    clean.extraArgs = "--keep-since 7d --keep 3";
-    flake = "$HOME/nixos-config";
-  };
-
-  #
-  # Services
-  #
   services = {
     fstrim.enable = true;
   };
 
-  #
-  # Locale
-  #
   time.timeZone = "Europe/Lisbon";
   i18n = {
     defaultLocale = "en_IE.UTF-8";
@@ -71,9 +45,6 @@
     };
   };
 
-  #
-  # Base firewall setings
-  #
   networking = {
     # cf. https://search.nixos.org/options?channel=unstable&query=networking.nftables.enable
     nftables.enable = true;

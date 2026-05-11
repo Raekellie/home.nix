@@ -14,10 +14,13 @@
   #  XDG_CACHE_HOME = "$HOME/.cache";
   #};
 
-  environment.systemPackages = with pkgs; [
-    # Editors
-    vim-full
+  programs.vim = {
+    enable = true;
+    defaultEditor = true;
+    package = pkgs.vim-full;
+  };
 
+  environment.systemPackages = with pkgs; [
     # Utilities
     file
     which

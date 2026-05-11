@@ -40,9 +40,7 @@
 
           modules = [
             impermanence.nixosModules.impermanence
-            ./system
-            ./hosts/impermanence.nix
-            ./hosts/nixos/configuration.nix
+            ./hosts/nixos
 
             home-manager.nixosModules.home-manager
             {

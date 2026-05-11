@@ -15,6 +15,12 @@
     extraCompatPackages = with pkgs; [
       proton-ge-bin
     ];
+
+    package = pkgs.steam.override {
+      # Move those pesky Steam dotfiles out of my home!
+      # So convenient that the derivation already uses bubblewrap :p
+      extraBwrapArgs = [ "--bind $HOME/games/steam $HOME" ];
+    };
   };
 
   services = {

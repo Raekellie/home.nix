@@ -1,45 +1,33 @@
 { config, pkgs, ... }:
 
 {
-  programs.appimage.enable = true;
-  services.flatpak.enable = true;
+  programs = {
+    appimage.enable = true;
 
-  programs.firefox = {
-    enable = true;
-    # Reference: https://mozilla.github.io/policy-templates/#preferences
-    # List of about:config options: https://searchfox.org/firefox-main/source/browser/components/StartupTelemetry.sys.mjs#363
-    preferences = {
-      "widget.use-xdg-desktop-portal.file-picker" = 1;
+    firefox = {
+      enable = true;
+      package = pkgs.librewolf;
 
-      "browser.ai.control.default" = "blocked";
-    };
-    policies = {
-      DisableTelemetry = true;
-      DisableFirefoxStudies = true;
-      EnableTrackingProtection = {
-        Value = true;
-        Locked = true;
-        Cryptomining = true;
-        Fingerprinting = true;
-      };
-      DisablePocket = true;
+      # Librewolf does basically all of what I want by default
+      # ---
+      # Reference - policies: https://mozilla.github.io/policy-templates/#preferences
+      # Reference - about:config options: https://searchfox.org/firefox-main/source/browser/components/StartupTelemetry.sys.mjs#363
+      # Practical example: https://wiki.nixos.org/wiki/Firefox/en#Advanced
     };
   };
 
-  services.qbittorrent.enable = false;
+  services = {
+    qbittorrent.enable = false;
+    flatpak.enable = true;
+  };
 
-  # Bluetooth
   hardware.bluetooth = {
     enable = false;
     powerOnBoot = true;
 
     settings = {
       General = {
-        Experimental = true;
         FastConnectable = true;
-      };
-      Policy = {
-        AutoEnable = true;
       };
     };
   };
@@ -53,14 +41,14 @@
 
     qalculate-qt
 
+    # For when I, sadly, need a Blink-based browser (WebUSB...)
+    ungoogled-chromium
+
     # Multimedia
     #mpv
 
     # E-reader
     #calibre
-
-    # For the sad times in which I'm forced to use a Blink based browser (WebUSB...)
-    ungoogled-chromium
 
     # Libreoffice
     libreoffice-qt-fresh
@@ -72,6 +60,10 @@
   fonts.packages = with pkgs; [
     liberation_ttf
     dejavu_fonts
+
+    # One of these may become my new preference over Liberation and Dejavu
+    inter
+    ibm-plex
 
     noto-fonts
     noto-fonts-cjk-sans

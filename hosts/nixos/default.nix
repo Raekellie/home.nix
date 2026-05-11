@@ -8,44 +8,44 @@
   imports = [
     ./hardware-configuration.nix
     ../common.nix
+    ../../system
   ];
 
-  # Bootloader
+  boot.kernelPackages = pkgs.linuxPackages_6_18;
+
   boot.loader.systemd-boot = {
     enable = true;
     editor = false;
     configurationLimit = 5;
+    memtest86.enable = true;
+    netbootxyz.enable = false; # Reminder for self that this is an option
   };
 
-  # Kernel
-  boot.kernelPackages = pkgs.linuxPackages_6_18;
-
-  #
-  # Connectivity
-  #
-
-  # Networking
-  networking.hostName = "nixos";
-  networking.networkmanager.enable = true;
-
-  # Printing (CUPS)
-  services.printing.enable = true;
-
-  # Sound (Pipewire)
-  services.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    wireplumber.enable = true;
-    pulse.enable = true;
-    alsa.enable = true;
-    #alsa.support32Bit = true;
+  networking = {
+    hostName = "nixos";
+    networkmanager.enable = true;
   };
 
-  # User
+  services = {
+    printing.enable = true;
+
+    pulseaudio.enable = false;
+    pipewire = {
+      enable = true;
+      wireplumber.enable = true;
+      pulse.enable = true;
+      alsa.enable = true;
+      #alsa.support32Bit = true;
+    };
+  };
+
+  security = {
+    rtkit.enable = true;
+  };
+
   users = {
+    mutableUsers = false;
     users."raquel" = {
-      # Don't forget to use `passwd`
       isNormalUser = true;
       description = "Raquel";
       extraGroups = [
@@ -53,6 +53,7 @@
         "networkmanager"
         "vboxsf"
       ];
+      initialHashedPassword = "$y$j9T$gz9hkJj1RWXS79j7Ra8uP0$0e6zKY678xn5jncOpWaPg6IhGBJCADttT5oFZg36Sj3";
       packages = with pkgs; [ ];
     };
   };

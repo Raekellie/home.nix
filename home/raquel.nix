@@ -2,7 +2,6 @@
 
 {
   home.username = "raquel";
-  home.homeDirectory = "/home/raquel";
   xdg.enable = true;
 
   imports = [
