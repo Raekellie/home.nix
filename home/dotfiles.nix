@@ -4,9 +4,7 @@
   pkgs,
   lib,
   ...
-}:
-
-{
+}: {
   home = {
     sessionVariables = {
       VIMINIT = "source ${inputs.dotfiles}/config/vim/vimrc";
@@ -15,7 +13,6 @@
 
   xdg.configFile = {
     "vim".source = "${inputs.dotfiles}/config/vim";
-    "starship.toml".source = "${inputs.dotfiles}/config/starship.toml";
     "ranger".source = "${inputs.dotfiles}/config/ranger";
     "gdb".source = "${inputs.dotfiles}/config/gdb";
 

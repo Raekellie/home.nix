@@ -3,8 +3,7 @@
   inputs,
   config,
   ...
-}:
-{
+}: {
   imports = [
     inputs.sops-nix.nixosModules.sops
   ];
@@ -12,10 +11,10 @@
   sops = {
     defaultSopsFile = ./secrets/secrets.yaml; # This will be dropped in the nix store
 
-    age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+    age.sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key"];
 
     secrets = {
-      initialHashedPassword = { };
+      initialHashedPassword = {neededForUsers = true;};
     };
   };
 }

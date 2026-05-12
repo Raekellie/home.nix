@@ -1,9 +1,10 @@
-{ config, pkgs, ... }:
-
 {
+  config,
+  pkgs,
+  ...
+}: {
   environment.systemPackages = with pkgs; [
-    nixfmt
-    #nixd
+    alejandra # TODO: wrapper so as to always be called with the arg to use tabs. Ref.: pkgs.symlinkJoin, pkgs.mkWrapper
     nil
     #rustup
 
