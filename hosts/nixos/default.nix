@@ -19,7 +19,8 @@
 
     btrfs = {
       enable = true;
-      rootDevice = "a";
+      rootDevice = "FIXME";
+      rootSubvol = "FIXME";
       daysToKeep = 30;
     };
   };
