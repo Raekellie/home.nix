@@ -1,14 +1,15 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ config, pkgs, ... }:
-
 {
+  config,
+  pkgs,
+  ...
+}: {
   imports = [
     ./hardware-configuration.nix
     ../common.nix
-    ../sops.nix
+    ../impermanence.nix
     ../../system
   ];
 
@@ -58,7 +59,7 @@
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBC2ym8cwJrrOR08Fw+nJl6p/8tTESltZRbnMLaNfA72 raquel@mermaid"
       ];
       hashedPasswordFile = config.sops.secrets.initialHashedPassword.path;
-      packages = with pkgs; [ ];
+      packages = with pkgs; [];
     };
   };
 

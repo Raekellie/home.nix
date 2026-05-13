@@ -29,36 +29,33 @@
     };
   };
 
-  outputs =
-    {
-      self,
-      nixpkgs,
-      home-manager,
-      sops-nix,
-      impermanence,
-      ...
-    }@inputs:
-    {
-      nixosConfigurations = {
-        "nixos" = nixpkgs.lib.nixosSystem {
-          #system = "x86-64-linux";
-          specialArgs = { inherit inputs; };
+  outputs = {
+    self,
+    nixpkgs,
+    home-manager,
+    sops-nix,
+    impermanence,
+    ...
+  } @ inputs: {
+    nixosConfigurations = {
+      "nixos" = nixpkgs.lib.nixosSystem {
+        #system = "x86-64-linux";
+        specialArgs = {inherit inputs;};
 
-          modules = [
-            #sops-nix.nixosModules.sops # Currently seeing how loading it after feels in terms of cleanliness
-            impermanence.nixosModules.impermanence
-            ./hosts/nixos
+        modules = [
+          ./sops
+          ./hosts/nixos
 
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users."raquel" = ./home/raquel.nix;
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users."raquel" = ./home/raquel.nix;
 
-              home-manager.extraSpecialArgs = { inherit inputs; };
-            }
-          ];
-        };
+            home-manager.extraSpecialArgs = {inherit inputs;};
+          }
+        ];
       };
     };
+  };
 }
