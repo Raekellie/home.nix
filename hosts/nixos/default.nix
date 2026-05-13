@@ -13,6 +13,17 @@
     ../../system
   ];
 
+  custom.impermanence = {
+    enable = true;
+    persistPath = "/persist";
+
+    btrfs = {
+      enable = true;
+      rootDevice = "a";
+      daysToKeep = 30;
+    };
+  };
+
   boot.kernelPackages = pkgs.linuxPackages_6_18;
 
   boot.loader.systemd-boot = {

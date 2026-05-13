@@ -4,30 +4,40 @@
   config,
   ...
 }: let
-  cfg = config.custom.impermanence-btrfs;
+  cfg = config.custom.impermanence;
 in {
   imports = [
     inputs.impermanence.nixosModules.impermanence
   ];
 
-  options = {
-    custom.impermanence-btrfs = with lib; {
-      enable = mkEnableOption "Aid in setting up impermanence with BTRFS as the root filesystem";
-      rootDevice = mkOption {
+  options = with lib; {
+    custom.impermanence = {
+      enable = mkEnableOption "Set up impermanence to persist common paths";
+      persistPath = mkOption {
         type = types.nonEmptyStr;
         default = null;
-        description = "Path to the root device containing the BTRFS filesystem. This must be set!";
-        example = "/dev/root_vg/root";
+        description = "Where to persist files in. This must be set!";
+        example = "/persist";
       };
-      daysToKeep = mkOption {
-        type = types.int;
-        default = 30;
-        description = "How long to keep a snapshot for until its deletion, in days";
+
+      btrfs = {
+        enable = mkEnableOption "Aid in setting up impermanence with BTRFS as the root filesystem";
+        rootDevice = mkOption {
+          type = types.nonEmptyStr;
+          default = null;
+          description = "Path to the root device containing the BTRFS filesystem. This must be set!";
+          example = "/dev/root_vg/root";
+        };
+        daysToKeep = mkOption {
+          type = types.ints.positive;
+          default = 30;
+          description = "How long to keep a snapshot for until its deletion, in days";
+        };
       };
     };
   };
 
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf (cfg.enable && cfg.btrfs.enable) {
     boot.initrd = {
       enable = true;
       supportedFilesystems = ["btrfs"];
@@ -38,7 +48,7 @@ in {
       # https://mt-caret.github.io/blog/posts/2020-06-29-optin-state.html
       postResumeCommands = lib.mkAfter ''
         mkdir /btrfs_tmp
-        mount "${cfg.rootDevice}" /btrfs_tmp
+        mount "${cfg.btrfs.rootDevice}" /btrfs_tmp
         if [[ -e /btrfs_tmp/root ]]; then
         	mkdir -p /btrfs_tmp/old_roots
         	timestamp=$(date --date="@$(stat -c %Y /btrfs_tmp/root)" "+%Y-%m-%-d_%H:%M:%S")
@@ -53,7 +63,7 @@ in {
         	btrfs subvolume delete "$1"
         }
 
-        for i in $(find /btrfs_tmp/old_roots/ -maxdepth 1 -mtime +${cfg.daysToKeep}; do
+        for i in $(find /btrfs_tmp/old_roots/ -maxdepth 1 -mtime +${lib.toString cfg.btrfs.daysToKeep}; do
         	delete_subvolume_recursively "$i"
         done
 
