@@ -2,6 +2,7 @@
   inputs,
   lib,
   config,
+  utils,
   ...
 }: let
   cfg = config.custom.impermanence;
@@ -38,38 +39,50 @@ in {
   };
 
   config = lib.mkIf (cfg.enable && cfg.btrfs.enable) {
-    boot.initrd = {
-      enable = true;
-      supportedFilesystems = ["btrfs"];
+    # NixOS uses systemd bootup as of 26.05 (bootup(7)#System Manager Bootup)
+    # https://github.com/nix-community/impermanence/pull/321
+    boot.initrd.systemd = {
+      enable = true; # Default in 26.05 FIXME: remove once 26.05 stabilizes
+      services.wipe-btrfs-root = {
+        # Specify dependencies explicitly
+        unitConfig.DefaultDependencies = false;
 
-      # Sources: (unsure which is the primary)
-      # https://github.com/nix-community/impermanence/blob/master/README.org#btrfs-subvolumes
-      # https://guekka.github.io/nixos-server-1/
-      # https://mt-caret.github.io/blog/posts/2020-06-29-optin-state.html
-      postResumeCommands = lib.mkAfter ''
-        mkdir /btrfs_tmp
-        mount "${cfg.btrfs.rootDevice}" /btrfs_tmp
-        if [[ -e /btrfs_tmp/root ]]; then
-        	mkdir -p /btrfs_tmp/old_roots
-        	timestamp=$(date --date="@$(stat -c %Y /btrfs_tmp/root)" "+%Y-%m-%-d_%H:%M:%S")
-        	mv /btrfs_tmp/root "/btrfs_tmp/old_roots/$timestamp"
-        fi
+        # Ensure the script finishes for the service to complete
+        serviceConfig.Type = "oneshot";
 
-        delete_subvolume_recursively() {
-        	IFS=$'\n'
-        	for i in $(btrfs subvolume list -o "$1" | cut -f 9- -d ' '); do
-        		delete_subvolume_recursively "/btrfs_tmp/$i"
-        	done
-        	btrfs subvolume delete "$1"
-        }
+        # `wantedBy` allows the system to boot even if this service fails, allowing for an easy recovery
+        # `requiredBy` will cause the bootup to fail if this service is unsuccessful
+        wantedBy = ["initrd.target"];
 
-        for i in $(find /btrfs_tmp/old_roots/ -maxdepth 1 -mtime +${lib.toString cfg.btrfs.daysToKeep}; do
-        	delete_subvolume_recursively "$i"
-        done
+        # Must complete before any filesystems are mounted
+        before = ["sysroot.mount"];
 
-        btrfs subvolume create /btrfs_tmp/root
-        umount /btrfs_tmp
-      '';
+        # Wait for the device to appear
+        requires = ["${utils.escapeSystemdPath cfg.btrfs.rootDevice}.device"];
+        after = [
+          "${utils.escapeSystemdPath cfg.btrfs.rootDevice}.device"
+          # Allow hibernation to resume before trying to alter any data
+          "local-fs-pre.target"
+        ];
+
+        script = ''
+          mkdir /btrfs_tmp
+          mount "${cfg.btrfs.rootDevice}" /btrfs_tmp
+
+          if [[ -e /btrfs_tmp/root ]]; then
+          	mkdir -p /btrfs_tmp/old_roots
+          	timestamp=$(date --date="@$(stat -c %Y /btrfs_tmp/root)" "+%Y-%m-%-d_%H:%M:%S")
+          	mv /btrfs_tmp/root "/btrfs_tmp/old_roots/$timestamp"
+          fi
+
+          for i in $(find /btrfs_tmp/old_roots/ -maxdepth 1 -mtime +${lib.toString cfg.btrfs.daysToKeep}; do
+          	btrfs subvolume delete --recursive "$i"
+          done
+
+          btrfs subvolume create /btrfs_tmp/root
+          umount /btrfs_tmp
+        '';
+      };
     };
   };
 }
