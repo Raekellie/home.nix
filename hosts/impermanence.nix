@@ -112,7 +112,7 @@ in {
             	mv /mnt/${cfg.btrfs.rootSubvol} "/mnt/old_roots/$timestamp"
             fi
 
-            for i in $(find /mnt/old_roots/ -maxdepth 1 -mtime +${lib.toString cfg.btrfs.daysToKeep}; do
+            for i in $(find /mnt/old_roots/ -maxdepth 1 -mtime +${lib.toString cfg.btrfs.daysToKeep}); do
             	btrfs subvolume delete --recursive "$i"
             done
 

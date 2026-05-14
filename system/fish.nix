@@ -14,13 +14,13 @@
     };
     starship = {
       enable = true;
-      settings = lib.fileContents "${inputs.dotfiles}/config/starship.toml";
+      settings = lib.fromTOML (lib.fileContents "${inputs.dotfiles}/config/starship.toml");
     };
 
     bash = {
       enable = true;
       interactiveShellInit = ''
-        if [[ $(${pkgs.procps}/bin/ps --no-header --pid=$PPID --format=comm) != "fish" && [[ "$SHLVL" == [1,2] ]]; then
+        if [[ $(${pkgs.procps}/bin/ps --no-header --pid=$PPID --format=comm) != "fish" && "$SHLVL" == [1,2] ]]; then
         	exec ${pkgs.fish}/bin/fish
         		fi
       '';
