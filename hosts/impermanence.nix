@@ -10,7 +10,6 @@ in {
   imports = [
     inputs.impermanence.nixosModules.impermanence
   ];
-
   options = with lib; {
     custom.impermanence = {
       enable = mkEnableOption "Set up impermanence to persist common paths";
@@ -45,10 +44,13 @@ in {
 
   config = lib.mkMerge [
     (lib.mkIf cfg.enable {
-      #FIXME: throws error because fsType isn't set up yet, which won't happen once I finish fleshing out the config
-      #fileSystems."${cfg.persistPath}" = {neededForBoot = true;};
+      sops.age.sshKeyPaths = ["/persist/etc/ssh/ssh_host_ed25519_key"]; # Not the prettiest hardcoding...
+
+      fileSystems."${cfg.persistPath}" = {neededForBoot = true;};
 
       environment.persistence."${cfg.persistPath}" = {
+        enable = true;
+        hideMounts = true;
         directories = [
           "/etc/nixos"
 
@@ -79,7 +81,7 @@ in {
       # https://github.com/nix-community/impermanence/pull/321
       boot.initrd.systemd = {
         enable = true; # Default in 26.05 FIXME: remove once 26.05 stabilizes
-        services.wipe-btrfs-root = {
+        services.custom-impermanence-btrfs = {
           # Specify dependencies explicitly
           unitConfig.DefaultDependencies = false;
 
@@ -91,7 +93,13 @@ in {
           wantedBy = ["initrd.target"];
 
           # Must complete before any filesystems are mounted
-          before = ["sysroot.mount"];
+          before = [
+            "sysroot.mount"
+
+            "sops-install-secrets.service"
+            # Appears to be necessary for `neededForUsers=true` secrets, but I can't get it working (needs `userborn`?)
+            # "sops-install-secrets-for-users.service"
+          ];
 
           # Wait for the device to appear
           requires = ["${utils.escapeSystemdPath cfg.btrfs.rootDevice}.device"];

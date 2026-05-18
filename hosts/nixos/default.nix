@@ -19,9 +19,9 @@
 
     btrfs = {
       enable = true;
-      rootDevice = "FIXME";
-      rootSubvol = "FIXME";
-      daysToKeep = 30;
+      rootDevice = "/dev/mapper/secure";
+      rootSubvol = "root";
+      daysToKeep = 14;
     };
   };
 
