@@ -19,24 +19,44 @@
 
     btrfs = {
       enable = true;
-      rootDevice = "/dev/mapper/secure";
+      rootDevice = "/dev/mapper/crypt";
       rootSubvol = "root";
       daysToKeep = 14;
     };
   };
 
-  boot.kernelPackages = pkgs.linuxPackages_6_18;
+  boot = {
+	kernelPackages = pkgs.linuxPackages_latest;
 
-  boot.loader.systemd-boot = {
-    enable = true;
-    editor = false;
-    configurationLimit = 5;
-    memtest86.enable = true;
-    netbootxyz.enable = false; # Reminder for self that this is an option
+ 	 loader = {
+timeout = 0;
+systemd-boot = {
+ 	   enable = true;
+ 	   editor = false;
+ 	   configurationLimit = 5;
+ 	   memtest86.enable = true;
+ 	   #netbootxyz.enable = true; # Reminder for self that this is an option
+  	};
+};
+
+# "Silent" boot
+# https://wiki.nixos.org/wiki/Plymouth
+consoleLogLevel = 3;
+initrd.verbose = false;
+kernelParams = [
+"quiet"
+"udev.log_level=3"
+"systemd.show_status=auto"
+];
+
+plymouth = {
+enable = true;
+theme = "bgrt";
+};
   };
 
   networking = {
-    hostName = "nixos";
+    hostName = "deskel";
     networkmanager.enable = true;
   };
 
@@ -65,23 +85,14 @@
       extraGroups = [
         "wheel"
         "networkmanager"
-        "vboxsf"
       ];
       openssh.authorizedKeys.keys = [
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBC2ym8cwJrrOR08Fw+nJl6p/8tTESltZRbnMLaNfA72 raquel@mermaid"
+	""
       ];
       hashedPasswordFile = config.sops.secrets.initialHashedPassword.path;
       packages = with pkgs; [];
     };
   };
-
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
 
   # Read the docs/release notes before changing this value
   # (man configuration.nix, https://nixos.org/nixos/options.html, https://nixos.org/manual/nixos/stable/release-notes)

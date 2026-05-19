@@ -4,37 +4,25 @@
   home = {
     shell.enableFishIntegration = true;
     shellAliases = {
-      "nixswitch" = "nixos-rebuild switch --sudo --flake ~/dev/nix/home.nix";
-      "nixswitch-dev" = "nixswitch --override-input dotfiles ~/dev/nix/dotfiles";
+      "nixswitch" = "nixos-rebuild switch --sudo --flake $HOME/dev/nix/home.nix";
+      "nixswitch-dev" = "nixswitch --override-input dotfiles $HOME/dev/nix/dotfiles";
     };
   };
 
-  #programs.vim = {
-  #  enable = true;
-  #  defaultEditor = true;
-  #};
+  programs = { starship.enable = true;
+  nushell.enable = true;
 
-  programs.starship.enable = true;
-
-  programs.zsh = {
-    enable = true;
-    historySubstringSearch.enable = true;
-    autosuggestion.enable = true;
-    syntaxHighlighting.enable = true;
-  };
-
-  programs.nushell.enable = true;
-
-  programs.git = {
+  git = {
     enable = true;
     settings = {
       user = {
         name = "Raquel";
-        email = "dev@raquellie.com";
+        email = "ela@raquellie.com";
       };
       init.defaultBranch = "main";
     };
   };
+};
 
   home.packages = with pkgs; [ ];
 }

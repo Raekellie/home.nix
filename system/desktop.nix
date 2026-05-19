@@ -17,12 +17,11 @@
   };
 
   services = {
-    qbittorrent.enable = false;
     flatpak.enable = true;
   };
 
   hardware.bluetooth = {
-    enable = false;
+    enable = true;
     powerOnBoot = true;
 
     settings = {
@@ -31,6 +30,7 @@
       };
     };
   };
+
 
   environment.systemPackages = with pkgs; [
     # General tools
@@ -45,16 +45,19 @@
     ungoogled-chromium
 
     # Multimedia
-    #mpv
+    mpv
 
     # E-reader
-    #calibre
+    calibre
 
-    # Libreoffice
+    # Office suite
     libreoffice-qt-fresh
     hunspell
     hunspellDicts.pt_PT
     hunspellDicts.en_GB-ize
+
+    # Assorted
+    qbittorrent
   ];
 
   fonts.packages = with pkgs; [

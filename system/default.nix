@@ -6,10 +6,12 @@
     ./fish.nix
     ./utilities.nix
 
-    ./gaming.nix
-    ./dev.nix
     ./desktop.nix
     ./kde.nix
+
+    ./gaming.nix
+    ./dev.nix
+    ./art.nix
   ];
 
 }

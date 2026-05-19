@@ -24,7 +24,7 @@
   };
 
   services = {
-    wivrn.enable = false;
+    wivrn.enable = true;
 
     # Network throughput testing utility - useful for checking there is enough bandwidth for VR
     iperf3 = {
@@ -34,11 +34,10 @@
   };
 
   environment.systemPackages = with pkgs; [
-    #faugus-launcher
-    #steam-run
+    faugus-launcher
+    steam-run
 
     #prismlauncher
-    #openjdk-minimal-jre
   ];
 
   # https://github.com/NixOS/nixpkgs/pull/396595

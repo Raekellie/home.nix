@@ -1,12 +1,12 @@
 { config, pkgs, ... }:
 
 {
-  hardware.opentabletdriver.enable = false;
+  hardware.opentabletdriver.enable = true;
 
   environment.systemPackages = with pkgs; [
+    krita
+    digikam
     #blender
-    #krita
-    #digikam
     #aseprite
   ];
 }

@@ -38,13 +38,12 @@
     ...
   } @ inputs: {
     nixosConfigurations = {
-      "nixos" = nixpkgs.lib.nixosSystem {
-        #system = "x86-64-linux";
+      "deskel" = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs;};
 
         modules = [
           ./sops
-          ./hosts/nixos
+          ./hosts/deskel
 
           home-manager.nixosModules.home-manager
           {
