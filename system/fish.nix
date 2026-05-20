@@ -10,6 +10,7 @@
   programs = {
     fish = {
       enable = true;
+      interactiveShellInit = lib.fileContents "${inputs.dotfiles}/config/config.fish";
       promptInit = "${pkgs.starship}/bin/starship init fish | source";
     };
     starship = {

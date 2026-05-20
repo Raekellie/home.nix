@@ -26,33 +26,33 @@
   };
 
   boot = {
-	kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages = pkgs.linuxPackages_latest;
 
- 	 loader = {
-timeout = 0;
-systemd-boot = {
- 	   enable = true;
- 	   editor = false;
- 	   configurationLimit = 5;
- 	   memtest86.enable = true;
- 	   #netbootxyz.enable = true; # Reminder for self that this is an option
-  	};
-};
+    loader = {
+      timeout = 0;
+      systemd-boot = {
+        enable = true;
+        editor = false;
+        configurationLimit = 5;
+        memtest86.enable = true;
+        #netbootxyz.enable = true; # Reminder for self that this is an option
+      };
+    };
 
-# "Silent" boot
-# https://wiki.nixos.org/wiki/Plymouth
-consoleLogLevel = 3;
-initrd.verbose = false;
-kernelParams = [
-"quiet"
-"udev.log_level=3"
-"systemd.show_status=auto"
-];
+    # "Silent" boot
+    # https://wiki.nixos.org/wiki/Plymouth
+    consoleLogLevel = 3;
+    initrd.verbose = false;
+    kernelParams = [
+      "quiet"
+      "udev.log_level=3"
+      "systemd.show_status=auto"
+    ];
 
-plymouth = {
-enable = true;
-theme = "bgrt";
-};
+    plymouth = {
+      enable = true;
+      theme = "bgrt";
+    };
   };
 
   networking = {
@@ -87,7 +87,7 @@ theme = "bgrt";
         "networkmanager"
       ];
       openssh.authorizedKeys.keys = [
-	""
+        ""
       ];
       hashedPasswordFile = config.sops.secrets.initialHashedPassword.path;
       packages = with pkgs; [];

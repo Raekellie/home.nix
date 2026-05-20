@@ -1,28 +1,26 @@
-{ config, pkgs, ... }:
-
-{
+{pkgs, ...}: {
   home = {
-    shell.enableFishIntegration = true;
     shellAliases = {
       "nixswitch" = "nixos-rebuild switch --sudo --flake $HOME/dev/nix/home.nix";
       "nixswitch-dev" = "nixswitch --override-input dotfiles $HOME/dev/nix/dotfiles";
     };
   };
 
-  programs = { starship.enable = true;
-  nushell.enable = true;
+  programs = {
+    starship.enable = true;
+    nushell.enable = true;
 
-  git = {
-    enable = true;
-    settings = {
-      user = {
-        name = "Raquel";
-        email = "ela@raquellie.com";
+    git = {
+      enable = true;
+      settings = {
+        user = {
+          name = "Raquel";
+          email = "ela@raquellie.com";
+        };
+        init.defaultBranch = "main";
       };
-      init.defaultBranch = "main";
     };
   };
-};
 
-  home.packages = with pkgs; [ ];
+  home.packages = with pkgs; [];
 }

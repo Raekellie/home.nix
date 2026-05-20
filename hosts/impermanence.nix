@@ -59,6 +59,8 @@ in {
           # https://mt-caret.github.io/blog/posts/2020-06-29-optin-state.html
           "/etc/NetworkManager/system-connections"
 
+          "/var/lib/flatpak"
+
           "/var/lib/nixos"
           "/var/log"
         ];

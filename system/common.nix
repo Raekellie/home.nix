@@ -1,6 +1,8 @@
-{ config, pkgs, ... }:
-
 {
+  config,
+  pkgs,
+  ...
+}: {
   security.sudo.execWheelOnly = true;
 
   zramSwap.enable = true;
@@ -10,6 +12,8 @@
     channel.enable = false;
 
     settings = {
+      allowed-users = ["@wheel"];
+
       use-xdg-base-directories = true;
       experimental-features = [
         "nix-command"
@@ -50,8 +54,8 @@
     nftables.enable = true;
     firewall = {
       enable = true;
-      allowedTCPPorts = [ ];
-      allowedUDPPorts = [ ];
+      allowedTCPPorts = [];
+      allowedUDPPorts = [];
     };
   };
 }
