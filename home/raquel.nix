@@ -1,13 +1,15 @@
-{ config, pkgs, ... }:
-
 {
-  home.username = "raquel";
-  xdg.enable = true;
-
+  config,
+  pkgs,
+  ...
+}: {
   imports = [
     ./dotfiles.nix
     ./shell.nix
   ];
+
+  home.username = "raquel";
+  xdg.enable = true;
 
   # Read the docs/release notes before changing this value
   # (https://nix-community.github.io/home-manager/release-notes.xhtml)

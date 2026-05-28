@@ -1,6 +1,4 @@
-{ ... }:
-
-{
+{...}: {
   imports = [
     ./common.nix
     ./fish.nix
@@ -13,5 +11,4 @@
     ./dev.nix
     ./art.nix
   ];
-
 }

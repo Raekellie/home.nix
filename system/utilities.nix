@@ -3,9 +3,7 @@
   config,
   pkgs,
   ...
-}:
-
-{
+}: {
   programs.vim = {
     enable = true;
     defaultEditor = true;
@@ -31,6 +29,8 @@
     bat
     eza
     fzf
+
+    sops
 
     # File management
     ranger

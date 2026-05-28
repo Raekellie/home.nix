@@ -35,6 +35,7 @@
 
   environment.systemPackages = with pkgs; [
     steam-run
+    mangohud
     prismlauncher
     #faugus-launcher # Currently prefer using it as a Flatpak for its inherent sandboxing
   ];

@@ -1,8 +1,15 @@
-{ config, pkgs, ... }:
-
 {
+  config,
+  pkgs,
+  ...
+}: {
   programs = {
     appimage.enable = true;
+
+    gnupg.agent = {
+      enable = true;
+      enableSSHSupport = true;
+    };
 
     firefox = {
       enable = true;
@@ -31,7 +38,6 @@
     };
   };
 
-
   environment.systemPackages = with pkgs; [
     # General tools
     kitty
@@ -57,6 +63,7 @@
     hunspellDicts.en_GB-ize
 
     # Assorted
+    imagemagick
     qbittorrent
   ];
 

@@ -1,6 +1,8 @@
-{ config, pkgs, ... }:
-
 {
+  config,
+  pkgs,
+  ...
+}: {
   hardware.opentabletdriver.enable = true;
 
   environment.systemPackages = with pkgs; [
@@ -8,5 +10,7 @@
     digikam
     #blender
     #aseprite
+
+    kdePackages.kdenlive
   ];
 }
