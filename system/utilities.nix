@@ -40,6 +40,7 @@
     gnutar
     xz
     gzip
+    unrar-free
 
     # Networking
     bind

@@ -1,13 +1,7 @@
-{
-  inputs,
-  config,
-  pkgs,
-  lib,
-  ...
-}: {
+{inputs, ...}: {
   home = {
     sessionVariables = {
-      VIMINIT = "source ${inputs.dotfiles}/config/vim/vimrc";
+      # ...
     };
   };
 

@@ -82,7 +82,7 @@ in {
       # NixOS uses systemd bootup as of 26.05 (bootup(7)#System Manager Bootup)
       # https://github.com/nix-community/impermanence/pull/321
       boot.initrd.systemd = {
-        enable = true; # Default in 26.05 FIXME: remove once 26.05 stabilizes
+        enable = true;
         services.custom-impermanence-btrfs = {
           # Specify dependencies explicitly
           unitConfig.DefaultDependencies = false;

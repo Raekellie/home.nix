@@ -2,13 +2,10 @@
   description = "My lovely machines under Nix :3";
 
   inputs = {
-    # Temporarily set to unstable to have the stateVersion be 26.05 (releasing in a few weeks)
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    #nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
 
     home-manager = {
-      url = "github:nix-community/home-manager";
-      #url = "github:nix-community/home-manager/release-25.11";
+      url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -42,11 +39,14 @@
         specialArgs = {inherit inputs;};
 
         modules = [
-          ./sops
+          ./sops/system.nix
           ./hosts/deskel
 
           home-manager.nixosModules.home-manager
           {
+            home-manager.sharedModules = [
+              ./sops/home.nix
+            ];
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users."raquel" = ./home/raquel.nix;

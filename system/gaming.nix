@@ -14,17 +14,26 @@
       extraCompatPackages = with pkgs; [
         proton-ge-bin
       ];
-
       package = pkgs.steam.override {
-        # Move those pesky Steam dotfiles out of my home!
-        # So convenient that the derivation already uses bubblewrap :p
-        extraBwrapArgs = ["--bind $HOME/games/steam $HOME"];
+        extraBwrapArgs = [
+          # For WiVRn - disable the need to set this for every VR game
+          "--setenv PRESSURE_VESSEL_IMPORT_OPENXR_1_RUNTIMES '1'"
+
+          # For posterity
+          # This breaks WiVRn. It's beautiful and works for everything else, but not VR
+          # "--bind $HOME/games/steam $HOME"
+        ];
       };
     };
   };
 
   services = {
-    wivrn.enable = true;
+    wivrn = {
+      enable = true;
+      openFirewall = true;
+      highPriority = true;
+      steam.enable = true;
+    };
 
     # Network throughput testing utility - useful for checking whether there is enough bandwidth for VR
     iperf3 = {
@@ -35,7 +44,6 @@
 
   environment.systemPackages = with pkgs; [
     steam-run
-    mangohud
     prismlauncher
     #faugus-launcher # Currently prefer using it as a Flatpak for its inherent sandboxing
   ];

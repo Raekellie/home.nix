@@ -1,8 +1,4 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
+{...}: {
   security.sudo.execWheelOnly = true;
 
   zramSwap.enable = true;

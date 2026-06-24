@@ -62,6 +62,9 @@
 
   services = {
     printing.enable = true;
+    avahi = {
+      nssmdns4 = true; # Necessary for .local resolution, which the printer requires
+    };
 
     pulseaudio.enable = false;
     pipewire = {
