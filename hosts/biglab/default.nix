@@ -5,9 +5,11 @@
 }: {
   imports = [
     ./hardware-configuration.nix
-    ../common.nix
-    ../impermanence.nix
-    #../../system
+    ../../system/common.nix
+    ../../system/impermanence.nix
+    ../../system/raquel.nix
+    ../../services/ssh.nix
+    ../../services/vpn.nix
   ];
 
   custom.impermanence = {
@@ -40,23 +42,6 @@
   networking = {
     hostName = "biglab";
     networkmanager.enable = true;
-  };
-
-  users = {
-    mutableUsers = false;
-    users."raquel" = {
-      isNormalUser = true;
-      description = "Raquel";
-      extraGroups = [
-        "wheel"
-        "networkmanager"
-      ];
-      openssh.authorizedKeys.keys = [
-        ""
-      ];
-      hashedPasswordFile = config.sops.secrets.initialHashedPassword.path;
-      packages = with pkgs; [];
-    };
   };
 
   # Read the docs/release notes before changing this value

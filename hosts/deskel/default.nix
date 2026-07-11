@@ -8,9 +8,9 @@
 }: {
   imports = [
     ./hardware-configuration.nix
-    ../common.nix
-    ../impermanence.nix
     ../../system
+    ../../system/impermanence.nix
+    ../../services/ssh.nix
   ];
 
   custom.impermanence = {
@@ -78,23 +78,6 @@
 
   security = {
     rtkit.enable = true;
-  };
-
-  users = {
-    mutableUsers = false;
-    users."raquel" = {
-      isNormalUser = true;
-      description = "Raquel";
-      extraGroups = [
-        "wheel"
-        "networkmanager"
-      ];
-      openssh.authorizedKeys.keys = [
-        ""
-      ];
-      hashedPasswordFile = config.sops.secrets.initialHashedPassword.path;
-      packages = with pkgs; [];
-    };
   };
 
   # Read the docs/release notes before changing this value
