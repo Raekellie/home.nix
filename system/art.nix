@@ -8,7 +8,7 @@
   environment.systemPackages = with pkgs; [
     krita
     digikam
-    #blender
+    pkgsRocm.blender
     #aseprite
 
     kdePackages.kdenlive

@@ -80,6 +80,6 @@
     noto-fonts-color-emoji
 
     iosevka
-    nerd-fonts.symbols-only
+    nerd-fonts.iosevka-term
   ];
 }
