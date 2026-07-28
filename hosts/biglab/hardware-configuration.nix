@@ -23,7 +23,10 @@
     options = ["subvol=root" "compress=zstd" "noatime" "discard=async"];
   };
 
-  boot.initrd.luks.devices."crypt".device = "/dev/disk/by-uuid/db811b5a-b06f-4522-90fc-68a6964a9e78";
+  boot.initrd.luks.devices."crypt" = {
+    device = "/dev/disk/by-uuid/db811b5a-b06f-4522-90fc-68a6964a9e78";
+    allowDiscards = true;
+  };
 
   fileSystems."/home" = {
     device = "/dev/mapper/crypt";
