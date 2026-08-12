@@ -17,6 +17,10 @@
   boot.kernelModules = ["kvm-amd"];
   boot.extraModulePackages = [];
 
+  hardware = {
+    amdgpu.overdrive.enable = true;
+  };
+
   fileSystems."/" = {
     device = "/dev/mapper/crypt";
     fsType = "btrfs";
