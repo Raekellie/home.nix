@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     home-manager = {
       url = "github:nix-community/home-manager/release-26.05";
@@ -29,14 +30,25 @@
   outputs = {
     self,
     nixpkgs,
+    nixpkgs-unstable,
     home-manager,
     sops-nix,
     impermanence,
     ...
-  } @ inputs: {
+  } @ inputs: let
+    # May also be used to pass over arguments to the regular `pkgs` if necessary, in the same way as done below for `nixpkgs-unstable`
+    pkg-args = {
+      system = "x86_64-linux";
+    };
+    # While `pkgs` is is special and taken care of by nixosConfigurations, any alternative has to be dealt with manually
+    pkgs-unstable = import nixpkgs-unstable pkg-args;
+  in {
     nixosConfigurations = {
       "deskel" = nixpkgs.lib.nixosSystem {
-        specialArgs = {inherit inputs;};
+        specialArgs = {
+          inherit inputs;
+          inherit pkgs-unstable;
+        };
 
         modules = [
           ./sops/system.nix

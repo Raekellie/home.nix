@@ -1,7 +1,6 @@
 {
-  config,
   pkgs,
-  lib,
+  pkgs-unstable,
   ...
 }: {
   programs.xppen.enable = false;
@@ -16,7 +15,8 @@
   # Patches written by https://github.com/Mrcubix
   nixpkgs.overlays = [
     (final: prev: {
-      patched-opentabletdriver = prev.opentabletdriver.overrideAttrs (previousAttrs: {
+      # Replace `pkgs-unstable` with `prev` to use the version available in stable NixOS
+      patched-opentabletdriver = pkgs-unstable.opentabletdriver.overrideAttrs (previousAttrs: {
         doCheck = false;
         patches =
           (previousAttrs.patches or [])
@@ -29,7 +29,7 @@
 
   environment.systemPackages = with pkgs; [
     krita
-    pkgsRocm.blender # FIXME: don't assume AMD GPU
+    pkgs-unstable.pkgsRocm.blender # FIXME: don't assume AMD GPU
     #digikam
     #aseprite
 

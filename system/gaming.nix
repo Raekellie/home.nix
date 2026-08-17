@@ -1,5 +1,5 @@
 {
-  nixpkgs,
+  pkgs-unstable,
   pkgs,
   ...
 }: {
@@ -92,7 +92,7 @@
     prismlauncher
     #faugus-launcher # Currently prefer using it as a Flatpak for its inherent sandboxing
 
-    wayvr
+    pkgs-unstable.wayvr
   ];
 
   # https://github.com/NixOS/nixpkgs/pull/396595
