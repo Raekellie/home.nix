@@ -67,6 +67,17 @@
           }
         ];
       };
+      "biglab" = nixpkgs.lib.nixosSystem {
+        specialArgs = {
+          inherit inputs;
+          inherit pkgs-unstable;
+        };
+
+        modules = [
+          ./sops/system.nix
+          ./hosts/biglab
+        ];
+      };
     };
   };
 }

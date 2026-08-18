@@ -5,8 +5,8 @@
 }: {
   imports = [
     ./hardware-configuration.nix
+    ../../custom/impermanence.nix
     ../../system/common.nix
-    ../../system/impermanence.nix
     ../../system/raquel.nix
     ../../services/ssh.nix
     ../../services/vpn.nix

@@ -8,8 +8,8 @@
 }: {
   imports = [
     ./hardware-configuration.nix
+    ../../custom/impermanence.nix
     ../../system
-    ../../system/impermanence.nix
     ../../services/ssh.nix
   ];
 
