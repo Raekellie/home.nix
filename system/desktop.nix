@@ -20,6 +20,7 @@
       # Reference - policies: https://mozilla.github.io/policy-templates/#preferences
       # Reference - about:config options: https://searchfox.org/firefox-main/source/browser/components/StartupTelemetry.sys.mjs#363
       # Practical example: https://wiki.nixos.org/wiki/Firefox/en#Advanced
+      # Additional examples by a blogger: https://www.sacredheartsc.com/blog/browser-de-slop/
     };
   };
 

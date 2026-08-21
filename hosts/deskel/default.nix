@@ -98,6 +98,9 @@
     };
   };
 
+  # Use ROCm & HIP enabled packages for those that support it
+  nixpkgs.config.rocmSupport = true;
+
   # Read the docs/release notes before changing this value
   # (man configuration.nix, https://nixos.org/nixos/options.html, https://nixos.org/manual/nixos/stable/release-notes)
   system.stateVersion = "26.05";
