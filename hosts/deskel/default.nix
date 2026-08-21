@@ -11,6 +11,7 @@
     ../common.nix
     ../impermanence.nix
     ../../system
+    ../../system/winbox.nix
   ];
 
   custom.impermanence = {
