@@ -23,7 +23,6 @@
     wget
     jq
 
-    starship
     ripgrep
     fd
     bat

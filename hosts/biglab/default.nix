@@ -8,8 +8,15 @@
     ../../custom/impermanence.nix
     ../../system/common.nix
     ../../system/raquel.nix
+    ../../system/fish.nix
+    ../../system/utilities.nix
     ../../services/ssh.nix
+
     ../../services/vpn.nix
+    ../../services/caddy.nix
+    ../../services/authelia.nix
+    ../../services/zabbix.nix
+    ../../services/silverbullet.nix
   ];
 
   custom.impermanence = {
