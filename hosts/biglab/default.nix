@@ -17,7 +17,13 @@
     ../../services/authelia.nix
     ../../services/zabbix.nix
     ../../services/silverbullet.nix
+    ../../services/firefly-iii.nix
+    ../../services/technitium.nix
+    ../../services/pufferpanel.nix
   ];
+
+  # Belongs better here than in the global ssh.nix
+  services.fail2ban.enable = true;
 
   custom.impermanence = {
     enable = true;
