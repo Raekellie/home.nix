@@ -2,12 +2,13 @@
   inputs,
   config,
   pkgs,
+  lib,
   ...
 }: {
   programs.vim = {
     enable = true;
     defaultEditor = true;
-    package = pkgs.vim-full;
+    package = lib.mkDefault pkgs.vim-full;
   };
 
   environment.systemPackages = with pkgs; [
@@ -45,6 +46,7 @@
     # Networking
     bind
     ipcalc
+    inetutils
 
     # System management
     lm_sensors

@@ -43,6 +43,8 @@
     # While `pkgs` is is special and taken care of by nixosConfigurations, any alternative has to be dealt with manually
     pkgs-unstable = import nixpkgs-unstable pkg-args;
   in {
+    packages.${pkg-args.system}."live-image" = self.nixosConfigurations."live-image".config.system.build.isoImage;
+
     nixosConfigurations = {
       "deskel" = nixpkgs.lib.nixosSystem {
         specialArgs = {
@@ -62,6 +64,30 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users."raquel" = ./home/raquel.nix;
+
+            home-manager.extraSpecialArgs = {inherit inputs;};
+          }
+        ];
+      };
+
+      "live-image" = nixpkgs.lib.nixosSystem {
+        specialArgs = {
+          inherit inputs;
+          inherit pkgs-unstable;
+        };
+        inherit (pkg-args) system;
+
+        modules = [
+          ./hosts/live-image
+
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.sharedModules = [
+              ./sops/home.nix
+            ];
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users."nixos" = ./home/common.nix;
 
             home-manager.extraSpecialArgs = {inherit inputs;};
           }
