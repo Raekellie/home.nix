@@ -8,10 +8,12 @@
 }: {
   imports = [
     ./hardware-configuration.nix
-    ../common.nix
-    ../impermanence.nix
+    ../../custom/impermanence.nix
+
     ../../system
     ../../system/winbox.nix
+
+    ../../services/ssh.nix
   ];
 
   custom.impermanence = {
@@ -20,7 +22,7 @@
 
     btrfs = {
       enable = true;
-      rootDevice = "/dev/mapper/crypt";
+      rootDevice = config.fileSystems."/".device;
       rootSubvol = "root";
       daysToKeep = 14;
     };

@@ -1,6 +1,7 @@
 {...}: {
   imports = [
     ./common.nix
+    ./raquel.nix
     ./fish.nix
     ./utilities.nix
 

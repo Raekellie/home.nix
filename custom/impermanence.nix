@@ -91,7 +91,7 @@ in {
           serviceConfig.Type = "oneshot";
 
           # `wantedBy` allows the system to boot even if this service fails, allowing for an easy recovery
-          # `requiredBy` will cause the bootup to fail if this service is unsuccessful
+          # `requiredBy`, alternatively, would cause the bootup to fail if this service is unsuccessful
           wantedBy = ["initrd.target"];
 
           # Must complete before any filesystems are mounted
@@ -99,7 +99,7 @@ in {
             "sysroot.mount"
 
             "sops-install-secrets.service"
-            # Appears to be necessary for `neededForUsers=true` secrets, but I can't get it working (needs `userborn`?)
+            # Appears to be necessary for `neededForUsers=true` secrets, but I can't get it working (requires `userborn`?)
             # "sops-install-secrets-for-users.service"
           ];
 
