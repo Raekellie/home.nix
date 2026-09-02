@@ -12,18 +12,15 @@
     ../../system/utilities.nix
     ../../services/ssh.nix
 
-    ../../services/vpn.nix
-    ../../services/caddy.nix
-    ../../services/authelia.nix
-    ../../services/zabbix.nix
-    ../../services/silverbullet.nix
-    ../../services/firefly-iii.nix
-    ../../services/technitium.nix
-    ../../services/pufferpanel.nix
+    #../../services/vpn.nix
+    #../../services/caddy.nix
+    #../../services/authelia.nix
+    #../../services/zabbix.nix
+    #../../services/silverbullet.nix
+    #../../services/firefly-iii.nix
+    #../../services/technitium.nix
+    #../../services/pufferpanel.nix
   ];
-
-  # Belongs better here than in the global ssh.nix
-  services.fail2ban.enable = true;
 
   custom.impermanence = {
     enable = true;
@@ -31,7 +28,7 @@
 
     btrfs = {
       enable = true;
-      rootDevice = "/dev/mapper/crypt";
+      rootDevice = config.fileSystems."/".device;
       rootSubvol = "root";
       daysToKeep = 14;
     };
