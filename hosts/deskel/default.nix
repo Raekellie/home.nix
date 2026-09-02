@@ -66,7 +66,9 @@
   services = {
     printing.enable = true;
     avahi = {
-      nssmdns4 = true; # Necessary for .local resolution, which the printer requires
+      # Necessary for .local resolution, which the printer requires
+      nssmdns4 = true;
+      nssmdns6 = true;
     };
 
     pulseaudio.enable = false;
@@ -81,23 +83,6 @@
 
   security = {
     rtkit.enable = true;
-  };
-
-  users = {
-    mutableUsers = false;
-    users."raquel" = {
-      isNormalUser = true;
-      description = "Raquel";
-      extraGroups = [
-        "wheel"
-        "networkmanager"
-      ];
-      openssh.authorizedKeys.keys = [
-        ""
-      ];
-      hashedPasswordFile = config.sops.secrets.initialHashedPassword.path;
-      packages = with pkgs; [];
-    };
   };
 
   # Use ROCm & HIP enabled packages for those that support it

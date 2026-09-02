@@ -36,14 +36,11 @@
     impermanence,
     ...
   } @ inputs: let
-    # May also be used to pass over arguments to the regular `pkgs` if necessary, in the same way as done below for `nixpkgs-unstable`
-    pkg-args = {
-      system = "x86_64-linux";
-    };
     # While `pkgs` is is special and taken care of by nixosConfigurations, any alternative has to be dealt with manually
-    pkgs-unstable = import nixpkgs-unstable pkg-args;
+    pkgs-unstable = import nixpkgs-unstable {system = "x86_64-linux";};
   in {
-    packages.${pkg-args.system}."live-image" = self.nixosConfigurations."live-image".config.system.build.isoImage;
+    # Alias to make `nix build .#live-image` as seamless as `nixos-rebuild ...`
+    packages."x86_64-linux"."live-image" = self.nixosConfigurations."live-image".config.system.build.isoImage;
 
     nixosConfigurations = {
       "deskel" = nixpkgs.lib.nixosSystem {
@@ -87,7 +84,6 @@
           inherit inputs;
           inherit pkgs-unstable;
         };
-        inherit (pkg-args) system;
 
         modules = [
           ./hosts/live-image

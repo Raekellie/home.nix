@@ -25,7 +25,7 @@
 
   environment.systemPackages = with pkgs; [
     krita
-    pkgs-unstable.pkgsRocm.blender # Not worth the effort to decouple when I do not have any non-AMD-GPU machine
+    pkgs-unstable.pkgsRocm.blender # Not worth the effort to decouple when I do not have any non-AMD GPU workstation
 
     #digikam
     #aseprite

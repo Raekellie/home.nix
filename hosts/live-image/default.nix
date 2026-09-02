@@ -1,4 +1,5 @@
 {
+  nixpkgs,
   pkgs,
   modulesPath,
   ...
@@ -21,4 +22,6 @@
 
   isoImage.squashfsCompression = "zstd";
   environment.systemPackages = with pkgs; [];
+
+  nixpkgs.hostPlatform = "x86_64-linux";
 }

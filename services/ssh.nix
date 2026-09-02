@@ -1,4 +1,6 @@
 {...}: {
+  # WARNING: this file MUST be included by all systems using SOPS!
+  # Eventually, make sure it's imported on the files themselves
   services = {
     openssh = {
       enable = true;
@@ -16,7 +18,5 @@
         PermitRootLogin = "no";
       };
     };
-
-    fail2ban.enable = true;
   };
 }

@@ -3,7 +3,7 @@
     desktopManager.plasma6.enable = true;
     displayManager = {
       plasma-login-manager.enable = true;
-      autoLogin.user = "raquel"; # FIXME: clean up this ugly hardcoding
+      autoLogin.user = "raquel";
     };
   };
 

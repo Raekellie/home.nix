@@ -3,7 +3,7 @@
     desktopManager.gnome.enable = true;
     displayManager = {
       gdm.enable = true;
-      autoLogin.user = "raquel"; # FIXME: clean up this ugly hardcoding
+      autoLogin.user = "raquel";
     };
     gnome.core-apps.enable = true;
     gnome.core-developer-tools.enable = false;
@@ -11,7 +11,5 @@
   };
 
   #environment.gnome.excludePackages = with pkgs; [gnome-tour gnome-user-docs];
-
-  environment.systemPackages = with pkgs; [
-  ];
+  environment.systemPackages = with pkgs; [];
 }

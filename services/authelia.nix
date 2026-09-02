@@ -1,7 +1,7 @@
 {...}: {
-  #services.authelia.instances = {
-  #  "main" = {
-  #    enable = true;
-  #  };
-  #};
+  services.authelia.instances = {
+    "main" = {
+      enable = true;
+    };
+  };
 }
