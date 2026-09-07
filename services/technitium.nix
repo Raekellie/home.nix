@@ -8,7 +8,7 @@ in {
 
 	environment.persistence."${impermanence.persistPath}" = {
 		directories = [
-			"/var/lib/technitium-dns-server"
+			"/var/lib/private/technitium-dns-server/"
 		];
 	};
 }
