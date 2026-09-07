@@ -1,106 +1,121 @@
 {
-  description = "My lovely machines under Nix :3";
+	description = "My lovely machines under Nix :3";
 
-  inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+	inputs = {
+		nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
+		nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    home-manager = {
-      url = "github:nix-community/home-manager/release-26.05";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+		home-manager = {
+			url = "github:nix-community/home-manager/release-26.05";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};
 
-    sops-nix = {
-      url = "github:Mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+		sops-nix = {
+			url = "github:Mic92/sops-nix";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};
 
-    impermanence = {
-      url = "github:nix-community/impermanence";
-      inputs.nixpkgs.follows = "";
-      inputs.home-manager.follows = "";
-    };
+		impermanence = {
+			url = "github:nix-community/impermanence";
+			inputs.nixpkgs.follows = "";
+			inputs.home-manager.follows = "";
+		};
 
-    dotfiles = {
-      url = "github:Raekellie/dotfiles";
-      flake = false;
-    };
-  };
+		dotfiles = {
+			url = "github:Raekellie/dotfiles";
+			flake = false;
+		};
+	};
 
-  outputs = {
-    self,
-    nixpkgs,
-    nixpkgs-unstable,
-    home-manager,
-    sops-nix,
-    impermanence,
-    ...
-  } @ inputs: let
-    # While `pkgs` is is special and taken care of by nixosConfigurations, any alternative has to be dealt with manually
-    pkgs-unstable = import nixpkgs-unstable {system = "x86_64-linux";};
-  in {
-    # Alias to make `nix build .#live-image` as seamless as `nixos-rebuild ...`
-    packages."x86_64-linux"."live-image" = self.nixosConfigurations."live-image".config.system.build.isoImage;
+	outputs = {
+		self,
+		nixpkgs,
+		nixpkgs-unstable,
+		home-manager,
+		sops-nix,
+		impermanence,
+		...
+	} @ inputs: let
+		# While `pkgs` is is special and taken care of by nixosConfigurations, any alternative has to be dealt with manually
+		pkgs-unstable = import nixpkgs-unstable {system = "x86_64-linux";};
+	in {
+		# Alias to make `nix build .#live-image` as seamless as `nixos-rebuild ...`
+		packages."x86_64-linux"."live-image" = self.nixosConfigurations."live-image".config.system.build.isoImage;
 
-    nixosConfigurations = {
-      "deskel" = nixpkgs.lib.nixosSystem {
-        specialArgs = {
-          inherit inputs;
-          inherit pkgs-unstable;
-        };
+		nixosConfigurations = {
+			"deskel" =
+				nixpkgs.lib.nixosSystem {
+					specialArgs = {
+						inherit inputs;
+						inherit pkgs-unstable;
+					};
 
-        modules = [
-          ./sops/system.nix
-          ./hosts/deskel
+					modules = [
+						./sops/system.nix
+						./hosts/deskel
 
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.sharedModules = [
-              ./sops/home.nix
-            ];
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users."raquel" = ./home/raquel.nix;
+						home-manager.nixosModules.home-manager
+						{
+							home-manager.sharedModules = [
+								./sops/home.nix
+							];
+							home-manager.useGlobalPkgs = true;
+							home-manager.useUserPackages = true;
+							home-manager.users."raquel" = ./home/raquel.nix;
 
-            home-manager.extraSpecialArgs = {inherit inputs;};
-          }
-        ];
-      };
+							home-manager.extraSpecialArgs = {inherit inputs;};
+						}
+					];
+				};
 
-      "biglab" = nixpkgs.lib.nixosSystem {
-        specialArgs = {
-          inherit inputs;
-          inherit pkgs-unstable;
-        };
+			"biglab" =
+				nixpkgs.lib.nixosSystem {
+					specialArgs = {
+						inherit inputs;
+						inherit pkgs-unstable;
+					};
 
-        modules = [
-          ./sops/system.nix
-          ./hosts/biglab
-        ];
-      };
+					modules = [
+						./sops/system.nix
+						./hosts/biglab
 
-      "live-image" = nixpkgs.lib.nixosSystem {
-        specialArgs = {
-          inherit inputs;
-          inherit pkgs-unstable;
-        };
+						home-manager.nixosModules.home-manager
+						{
+							home-manager.sharedModules = [
+								./sops/home.nix
+							];
+							home-manager.useGlobalPkgs = true;
+							home-manager.useUserPackages = true;
+							home-manager.users."raquel" = ./home/common.nix;
 
-        modules = [
-          ./hosts/live-image
+							home-manager.extraSpecialArgs = {inherit inputs;};
+						}
+					];
+				};
 
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.sharedModules = [
-              ./sops/home.nix
-            ];
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users."nixos" = ./home/common.nix;
+			"live-image" =
+				nixpkgs.lib.nixosSystem {
+					specialArgs = {
+						inherit inputs;
+						inherit pkgs-unstable;
+					};
 
-            home-manager.extraSpecialArgs = {inherit inputs;};
-          }
-        ];
-      };
-    };
-  };
+					modules = [
+						./hosts/live-image
+
+						home-manager.nixosModules.home-manager
+						{
+							home-manager.sharedModules = [
+								./sops/home.nix
+							];
+							home-manager.useGlobalPkgs = true;
+							home-manager.useUserPackages = true;
+							home-manager.users."nixos" = ./home/common.nix;
+
+							home-manager.extraSpecialArgs = {inherit inputs;};
+						}
+					];
+				};
+		};
+	};
 }
