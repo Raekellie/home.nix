@@ -51,12 +51,33 @@
 
 	networking = {
 		hostName = "biglab";
-		networkmanager.enable = true;
-		wireless.enable = lib.mkForce false;
+		useNetworkd = true;
+	};
+
+	systemd = {
+		network = {
+			enable = true;
+			networks = {
+				"10-ether" = {
+					matchConfig.Path = "pci-0000:03:00.0";
+					networkConfig = {
+						DHCP = "ipv4";
+						IPv6AcceptRA = true;
+					};
+					ipv6AcceptRAConfig = {
+						Token = "static:::bee6:b00b:fee1:50f7"; # I am exercising my free will as an adult
+					};
+					linkConfig = {
+						RequiredForOnline = "routable";
+					};
+				};
+			};
+		};
 	};
 
 	services = {
-		fail2ban.enable = true;
+		# TODO: Re-enable this when I have time to properly set it up
+		#fail2ban.enable = true;
 	};
 
 	# Read the docs/release notes before changing this value
