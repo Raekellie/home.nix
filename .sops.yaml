@@ -3,6 +3,12 @@ keys:
   - &host_deskel  age1rk66u0hwy08j0gyyadjpltk284gfd9xvmp3tzu8ncjnasz5l232syvcnsc
   - &host_biglab  age1s5gg7yr74wc7jwza3lccp2uazf969ndffckqp69qhze95wyf8y2qt455nc
 creation_rules:
+  - path_regex: hosts/biglab/sops/[^/]+\.(yaml|json|env|ini|enc)$
+    key_groups:
+      - pgp:
+          - *admin_raquel
+        age:
+          - *host_biglab
   - path_regex: sops/[^/]+\.(yaml|json|env|ini|enc)$
     key_groups:
       - pgp:

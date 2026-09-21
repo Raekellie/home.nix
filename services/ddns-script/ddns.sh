@@ -5,14 +5,39 @@
 # statement, on line 1, which I do want to keep, causes the script to immediately fail on any command error
 # This way if it fails silently I will know some command failed, if not, it will have a message by me
 
+#####
+##### Using
+#####
+### Option 1: Running normally
+### $HEADERS_FILE_ROUTER and $HEADERS_FILE_PORKBUN must be set and point to their respective files
 ###
-### Globals
+### Option 2: systemd service, making use of credentials (https://systemd.io/CREDENTIALS/)
+### "$CREDENTIALS_DIRECTORY" must be set by systemd, and the assumed filenames are:
+### 'headers_router' for HEADERS_FILE_ROUTER
+### 'headers_porkbun' for HEADERS_FILE_PORKBUN
+#####
 ###
+# Note on the HEADERS_FILE_ROUTER:
 # curl splits the authorization header past some length, 16 appears to avoid having to deal with that in the file
-HEADERS_FILE_ROUTER='headers_router'
-HEADERS_FILE_PORKBUN='headers_porkbun'
-DOMAIN_NAME='raquellie.com'
 
+# -v checks if a variable with that *name* is set, thus $ is not used here
+if [[ -v "CREDENTIALS_DIRECTORY" ]]; then
+	HEADERS_FILE_ROUTER="$CREDENTIALS_DIRECTORY/headers_router"
+	HEADERS_FILE_PORKBUN="$CREDENTIALS_DIRECTORY/headers_porkbun"
+else
+	if [[ ! -v "HEADERS_FILE_ROUTER" ]]; then
+		echo "[ERROR] \$HEADERS_FILE_ROUTER is unset!" >&2
+		exit 1
+	fi
+	if [[ ! -v "HEADERS_FILE_PORKBUN" ]]; then
+		echo "[ERROR] \$HEADERS_FILE_PORKBUN is unset!" >&2
+		exit 1
+	fi
+fi
+
+echo $HEADERS_FILE_ROUTER
+echo $HEADERS_FILE_PORKBUN
+exit 0
 ###
 ### Obtaining the IPs
 ###
@@ -26,7 +51,7 @@ function get_router_addr() {
 
 # RouterOS REST API documentation: https://manual.mikrotik.com/docs/developer-guides/rest-api/
 function get_router_ipv4() {
-	local REQUEST_CMD=(curl --silent --insecure --header "@""$HEADERS_FILE_ROUTER" "$(get_router_addr)"/rest/ip/address)
+	local REQUEST_CMD=(curl --silent --insecure --header "@$HEADERS_FILE_ROUTER" "$(get_router_addr)"/rest/ip/address)
 	# Select the object that contains the correct interface, and extract its address
 	local FILTER_CMD=(jq --raw-output '.[] | select(."actual-interface"=="ether8") | ."address"')
 	# Cut away the CIDR notation
@@ -61,6 +86,7 @@ echo "[INFO][LOCAL] Got IPv4 \"$SERVER_IPV4\" and IPv6 \"$SERVER_IPV6\""
 ###
 ### Sending the API requests to the registrar
 ###
+DOMAIN_NAME='raquellie.com'
 API_BASE_URL='https://api.porkbun.com/api/json/v3'
 
 API_GET_A_RECORD="dns/retrieveByNameType/$DOMAIN_NAME/A"
@@ -79,9 +105,9 @@ function did_porkbun_error() {
 # (record_type): "A"=>IPv4, "AAAA"=>IPv6
 function get_porkbun_record() {
 	if [[ "$1" == "A" ]]; then
-		local CURL_CMD=(curl --silent --header "@""$HEADERS_FILE_PORKBUN" --request POST "$API_BASE_URL/$API_GET_A_RECORD")
+		local CURL_CMD=(curl --silent --header "@$HEADERS_FILE_PORKBUN" --request POST "$API_BASE_URL/$API_GET_A_RECORD")
 	elif [[ "$1" == "AAAA" ]]; then
-		local CURL_CMD=(curl --silent --header "@""$HEADERS_FILE_PORKBUN" --request POST "$API_BASE_URL/$API_GET_AAAA_RECORD")
+		local CURL_CMD=(curl --silent --header "@$HEADERS_FILE_PORKBUN" --request POST "$API_BASE_URL/$API_GET_AAAA_RECORD")
 	fi
 
 	local JQ_CMD=(jq --raw-output '.records.[].content')
@@ -98,9 +124,9 @@ function get_porkbun_record() {
 function update_porkbun() {
 	# Note: `Content-Type: application/json` is required to be in the header file
 	if [[ "$1" == "A" ]]; then
-		local CURL_CMD=(curl --silent --header "@""$HEADERS_FILE_PORKBUN" --data '{"content": "'"$2"'"}' --request POST "$API_BASE_URL/$API_UPDATE_A_RECORD")
+		local CURL_CMD=(curl --silent --header "@$HEADERS_FILE_PORKBUN" --data '{"content": "'"$2"'"}' --request POST "$API_BASE_URL/$API_UPDATE_A_RECORD")
 	elif [[ "$1" == "AAAA" ]]; then
-		local CURL_CMD=(curl --silent --header "@""$HEADERS_FILE_PORKBUN" --data '{"content": "'"$2"'"}' --request POST "$API_BASE_URL/$API_UPDATE_AAAA_RECORD")
+		local CURL_CMD=(curl --silent --header "@$HEADERS_FILE_PORKBUN" --data '{"content": "'"$2"'"}' --request POST "$API_BASE_URL/$API_UPDATE_AAAA_RECORD")
 	fi
 
 	local CURL_RESULT=$("${CURL_CMD[@]}")

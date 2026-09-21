@@ -6,12 +6,14 @@
 }: {
 	imports = [
 		./hardware-configuration.nix
+		./sops
 		../../custom/impermanence.nix
 		../../system/common.nix
 		../../system/raquel.nix
 		../../system/fish.nix
 		../../system/utilities.nix
 		../../services/ssh.nix
+		../../services/ddns-script
 
 		../../services/technitium.nix
 		#../../services/caddy.nix
