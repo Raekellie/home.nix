@@ -10,15 +10,6 @@
 
 		secrets = {
 			initialHashedPassword = {neededForUsers = true;};
-
-			biglab_ddns_headers_router = {
-				format = "binary";
-				sopsFile = ./headers_router.enc;
-			};
-			biglab_ddns_headers_porkbun = {
-				format = "binary";
-				sopsFile = ./headers_porkbun.enc;
-			};
 		};
 	};
 }

@@ -19,9 +19,10 @@
 			serviceConfig = {
 				Type = "oneshot";
 				ExecStart = "${inputs.self}/services/ddns-script/script.sh";
+				User = "raquel";
 				LoadCredential = [
-					"${config.sops.secrets.services-ddns-routerHeaders.path}"
-					"${config.sops.secrets.services-ddns-porkbunHeaders.path}"
+					"headers-router:${config.sops.secrets.services-ddns-routerHeaders.path}"
+					"headers-porkbun:${config.sops.secrets.services-ddns-porkbunHeaders.path}"
 				];
 			};
 		};

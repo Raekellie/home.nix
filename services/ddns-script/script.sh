@@ -13,8 +13,8 @@
 ###
 ### Option 2: systemd service, making use of credentials (https://systemd.io/CREDENTIALS/)
 ### "$CREDENTIALS_DIRECTORY" must be set by systemd, and the assumed filenames are:
-### 'headers_router' for HEADERS_FILE_ROUTER
-### 'headers_porkbun' for HEADERS_FILE_PORKBUN
+### 'headers-router' for HEADERS_FILE_ROUTER
+### 'headers-porkbun' for HEADERS_FILE_PORKBUN
 #####
 ###
 # Note on the HEADERS_FILE_ROUTER:
@@ -22,8 +22,8 @@
 
 # -v checks if a variable with that *name* is set, thus $ is not used here
 if [[ -v "CREDENTIALS_DIRECTORY" ]]; then
-	HEADERS_FILE_ROUTER="$CREDENTIALS_DIRECTORY/headers_router"
-	HEADERS_FILE_PORKBUN="$CREDENTIALS_DIRECTORY/headers_porkbun"
+	HEADERS_FILE_ROUTER="$CREDENTIALS_DIRECTORY/headers-router"
+	HEADERS_FILE_PORKBUN="$CREDENTIALS_DIRECTORY/headers-porkbun"
 else
 	if [[ ! -v "HEADERS_FILE_ROUTER" ]]; then
 		echo "[ERROR] \$HEADERS_FILE_ROUTER is unset!" >&2
@@ -35,9 +35,6 @@ else
 	fi
 fi
 
-echo $HEADERS_FILE_ROUTER
-echo $HEADERS_FILE_PORKBUN
-exit 0
 ###
 ### Obtaining the IPs
 ###
