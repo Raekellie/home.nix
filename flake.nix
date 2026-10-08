@@ -2,11 +2,17 @@
 	description = "My lovely machines under Nix :3";
 
 	inputs = {
-		nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
+		#nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
 		nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+		# FIXME TODO: REMOVE WHEN 26.11 BECOMES STABLE
+		# Reasoning is to set stateVersion to the latest and have things be set up with all the new defaults,
+		# particularly for the server, before it's effectively "locked in", particularly when it comes to databases
+		nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
 		home-manager = {
-			url = "github:nix-community/home-manager/release-26.05";
+			#url = "github:nix-community/home-manager/release-26.05";
+			# FIXME TODO: SAME AS ABOVE
+			url = "github:nix-community/home-manager";
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 
