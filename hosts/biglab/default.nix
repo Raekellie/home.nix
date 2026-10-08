@@ -80,6 +80,11 @@
 	services = {
 		# TODO: Re-enable this when I have time to properly set it up
 		#fail2ban.enable = true;
+
+		# Allow the server to be accessed via biglab.local
+		avahi = {
+			enable = true;
+		};
 	};
 
 	# Read the docs/release notes before changing this value
