@@ -1,4 +1,4 @@
-{...}: {
+{config, ...}: {
 	# References:
 	# https://www.samba.org/samba/docs/current/man-html/smb.conf.5.html
 	# https://wiki.nixos.org/wiki/Samba#Server_setup; https://wiki.archlinux.org/title/Samba
@@ -18,27 +18,43 @@
 				"guest account" = "nobody";
 				"map to guest" = "bad user";
 			};
-			"raquel" = {
-				"path" = "/storage/shared/raquel";
+			"samba-raquel" = {
+				"path" = "/storage/shared/samba-raquel";
 				"browseable" = "yes";
 				"read only" = "no";
 				"guest ok" = "no";
 				"create mask" = "0644";
 				"directory mask" = "0755";
-				"force user" = "raquel";
+				"force user" = "samba-raquel";
+				"valid user" = "samba-raquel";
 			};
 		};
 	};
 
-	# Discovery (for Windows machines) - from NixOS wiki
-	#services.samba-wsdd = {
-	#	enable = true;
-	#	openFirewall = true;
-	#};
-	#services.avahi = {
-	#	enable = true;
-	#	publish.enable = true;
-	#	publish.userServices = true;
-	#	openFirewall = true;
-	#};
+	# Users
+	users.users."samba-raquel" = {
+		description = "Write-access to Samba shares";
+		extraGroups = ["users"];
+		hashedPasswordFile = config.sops.secrets.services-samba-user-password-raquel.path;
+		isNormalUser = true;
+	};
+	system.activationScripts = {
+		# The password is repeated twice with newline characters as `smbpasswd` requires a password confirmatio even in
+		# non-interactive mode where input is piped in through stdin.
+		"custom_samba_user_passwords".text = ''
+			/run/current-system/sw/bin/printf "$(/run/current-system/sw/bin/cat ${config.sops.secrets.services-samba-user-password-raquel.path})\n$(/run/current-system/sw/bin/cat ${config.sops.secrets.services-samba-user-password-raquel.path})\n" | /run/current-system/sw/bin/smbpasswd -sa samba-raquel
+		'';
+	};
+
+	# Discoverability
+	services.samba-wsdd = {
+		enable = true;
+		openFirewall = true;
+	};
+	services.avahi = {
+		enable = true;
+		publish.enable = true;
+		publish.userServices = true;
+		openFirewall = true;
+	};
 }
