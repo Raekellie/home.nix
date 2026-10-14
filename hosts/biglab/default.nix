@@ -16,6 +16,7 @@
 		../../services/ddns-script
 
 		../../services/technitium.nix
+		../../services/samba.nix
 		#../../services/caddy.nix
 		#../../services/authelia.nix
 		#../../services/zabbix.nix
