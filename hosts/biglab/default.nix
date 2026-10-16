@@ -17,10 +17,10 @@
 
 		../../services/technitium.nix
 		../../services/samba.nix
-		#../../services/caddy.nix
+		../../services/caddy.nix
+		../../services/silverbullet.nix
 		#../../services/authelia.nix
 		#../../services/zabbix.nix
-		#../../services/silverbullet.nix
 		#../../services/firefly-iii.nix
 		#../../services/pufferpanel.nix
 	];

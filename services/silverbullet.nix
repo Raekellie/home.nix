@@ -1,6 +1,15 @@
-{...}: {
-  # Might need extra options depending on how the derivation interacts with the single-user/multi-user option
-  services.silverbullet = {
-    enable = true;
-  };
+{
+	config,
+	lib,
+	...
+}: {
+	services = {
+		silverbullet = {
+			enable = true;
+			spaceDir = "/storage/internal/silverbullet";
+		};
+		caddy.virtualHosts."silverbullet.raquellie.com".extraConfig = ''
+			reverse_proxy localhost:${lib.toString config.services.silverbullet.listenPort}
+		'';
+	};
 }
