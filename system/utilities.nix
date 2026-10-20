@@ -1,58 +1,59 @@
 {
-  inputs,
-  config,
-  pkgs,
-  lib,
-  ...
+	inputs,
+	config,
+	pkgs,
+	lib,
+	...
 }: {
-  programs.vim = {
-    enable = true;
-    defaultEditor = true;
-    package = lib.mkDefault pkgs.vim-full;
-  };
+	programs.vim = {
+		enable = true;
+		defaultEditor = true;
+		package = lib.mkDefault pkgs.vim-full;
+	};
 
-  environment.systemPackages = with pkgs; [
-    # Utilities
-    file
-    which
-    gawk
-    gnused
-    tree
+	environment.systemPackages = with pkgs; [
+		# Utilities
+		file
+		which
+		gawk
+		gnused
+		tree
 
-    git
-    curl
-    wget
-    jq
+		git
+		curl
+		wget
+		jq
 
-    ripgrep
-    fd
-    bat
-    eza
-    fzf
+		ripgrep
+		fd
+		bat
+		eza
+		fzf
 
-    sops
+		sops
+		tmux
 
-    # File management
-    ranger
+		# File management
+		ranger
 
-    zip
-    libarchive # bsdtar
-    gnutar
-    xz
-    gzip
-    unrar-free
+		zip
+		libarchive # bsdtar
+		gnutar
+		xz
+		gzip
+		unrar-free
 
-    # Networking
-    bind
-    ipcalc
-    inetutils
+		# Networking
+		bind
+		ipcalc
+		inetutils
 
-    # System management
-    lm_sensors
-    pciutils
-    ethtool
-    usbutils
+		# System management
+		lm_sensors
+		pciutils
+		ethtool
+		usbutils
 
-    killall
-  ];
+		killall
+	];
 }
