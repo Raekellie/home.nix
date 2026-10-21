@@ -14,6 +14,7 @@
 		../../system/utilities.nix
 		../../services/ssh.nix
 		../../services/ddns-script
+		../../services/ups.nix
 
 		../../services/technitium.nix
 		../../services/samba.nix

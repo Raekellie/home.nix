@@ -16,6 +16,7 @@
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 
+		# Important: `sops-nix` only accepts strings as key values, no other types
 		sops-nix = {
 			url = "github:Mic92/sops-nix";
 			inputs.nixpkgs.follows = "nixpkgs";
