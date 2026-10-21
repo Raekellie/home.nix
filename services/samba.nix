@@ -53,8 +53,12 @@
 	};
 	services.avahi = {
 		enable = true;
-		publish.enable = true;
-		publish.userServices = true;
 		openFirewall = true;
+		settings = {
+			publish = {
+				disable-publishing = false;
+				disable-user-service-publishing = false;
+			};
+		};
 	};
 }

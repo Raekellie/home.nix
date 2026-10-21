@@ -86,6 +86,8 @@
 		# Allow the server to be accessed via biglab.local
 		avahi = {
 			enable = true;
+			nssmdns4 = true;
+			nssmdns6 = true;
 		};
 	};
 
