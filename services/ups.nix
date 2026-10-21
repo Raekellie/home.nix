@@ -1,7 +1,32 @@
-{config, ...}: {
-	# https://wiki.nixos.org/wiki/Uninterruptible_power_supply
+{
+	pkgs,
+	config,
+	...
+}: {
+	# Highly based on the information at https://wiki.nixos.org/wiki/Uninterruptible_power_supply
 
-	# Configuration on the UPS side - `upsd`
+	# The systemd service that will make the UPS shut down a few seconds after the server does, in the case of an outage
+	# Copied from ConfigExamples 3.0 book, Appendix B.2.
+	systemd.services.nut-delayed-ups-shutdown = {
+		enable = true;
+		environment = config.systemd.services.upsmon.environment;
+		description = "Trigger a delayed UPS shutdown";
+		before = ["umount.target"];
+		wantedBy = ["final.target"];
+		serviceConfig = {
+			Type = "oneshot";
+			# Must be run as root
+			ExecStart = ''${pkgs.nut}/bin/upsdrvctl -u root shutdown'';
+
+			# Must not use the option `Slice`: if used, `upsdrvctl` will not run as a late shutdown service
+		};
+		unitConfig = {
+			ConditionPathExists = config.power.ups.upsmon.settings.POWERDOWNFLAG;
+			DefaultDependencies = "no";
+		};
+	};
+
+	# UPS driver - `upsd` (NUT)
 	power.ups = {
 		enable = true;
 		mode = "standalone";
@@ -10,6 +35,26 @@
 			description = "Eaton 5E Gen2 (5E1200UI)";
 			driver = "usbhid-ups";
 			port = "auto";
+
+			directives = [
+				# "Restore power on AC" BIOS option needs power to be cut for a few seconds to work
+				# This is achieved via the directives below
+
+				# When shutting down, the service above calls `upsdrvctl shutdown` to tell the UPS that
+				# after x seconds, the UPS power must be cut, even if line power returns.
+				# There is a risk that the system takes longer than the default 20 seconds to shut down.
+				# This is set to a higher value to solve this issue.
+				"override.ups.delay.shutdown = 60"
+
+				# UPS power is now cut regardless of line power. After y seconds, if line power returns, then turn on
+				# UPS power. The system has now been offline for the difference between these two timings, and the BIOS
+				# should turn the system back on by itself.
+				# The value below must always be higher than the previous for this to work.
+				"override.ups.delay.start = 70" # Default: 30
+
+				# Set the low battery condition to slightly higher to account for the longer delay to shut down
+				"override.battery.charge.low = 30" # Default: 20
+			];
 		};
 
 		# To allow for communication between `upsd` and `upsmon`
@@ -32,7 +77,7 @@
 			upsmon = "primary";
 		};
 
-		# Configuration on the machine side - `upsmon`
+		# Monitor, react to UPS events - `upsmon`
 		upsmon = {
 			# Wire it up to `upsd`
 			monitor."UPS-0" = {
