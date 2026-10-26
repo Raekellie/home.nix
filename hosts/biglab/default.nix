@@ -7,6 +7,8 @@
 	imports = [
 		./hardware-configuration.nix
 		./sops
+		./ups.nix
+
 		../../custom/impermanence.nix
 		../../system/common.nix
 		../../system/raquel.nix
@@ -14,7 +16,6 @@
 		../../system/utilities.nix
 		../../services/ssh.nix
 		../../services/ddns-script
-		../../services/ups.nix
 
 		../../services/technitium.nix
 		../../services/samba.nix
