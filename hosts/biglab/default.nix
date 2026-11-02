@@ -21,6 +21,9 @@
 		../../services/samba.nix
 		../../services/caddy.nix
 		../../services/silverbullet.nix
+
+		../../services/postgresql.nix
+		../../services/immich.nix
 		#../../services/authelia.nix
 		#../../services/zabbix.nix
 		#../../services/firefly-iii.nix
