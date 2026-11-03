@@ -3,6 +3,7 @@
 		inputs.sops-nix.nixosModules.sops
 	];
 
+	# Important: `sops-nix` only accepts strings as valid key values, and no others
 	sops = {
 		defaultSopsFile = ./default.yaml;
 

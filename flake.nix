@@ -3,11 +3,11 @@
 
 	inputs = {
 		#nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
-		nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+		nixpkgs-unstable.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.zst";
 		# FIXME TODO: REMOVE WHEN 26.11 BECOMES STABLE
 		# Reasoning is to set stateVersion to the latest and have things be set up with all the new defaults,
 		# particularly for the server, before it's effectively "locked in", particularly when it comes to databases
-		nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+		nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.zst";
 
 		home-manager = {
 			#url = "github:nix-community/home-manager/release-26.05";
@@ -16,7 +16,6 @@
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 
-		# Important: `sops-nix` only accepts strings as key values, no other types
 		sops-nix = {
 			url = "github:Mic92/sops-nix";
 			inputs.nixpkgs.follows = "nixpkgs";
