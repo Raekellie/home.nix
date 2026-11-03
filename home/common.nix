@@ -1,4 +1,4 @@
-{config, ...}: {
+{osConfig, ...}: {
 	imports = [
 		./dotfiles.nix
 		./shell.nix
@@ -7,9 +7,7 @@
 
 	nix = {
 		assumeXdg = true;
-		extraOptions = ''
-			!include ${config.sops.secrets.nixAccessTokens.path}
-		'';
+		extraOptions = ''!include ${osConfig.sops.secrets.nixAccessTokens.path}'';
 	};
 
 	# Read the docs/release notes before changing this value

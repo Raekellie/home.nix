@@ -1,4 +1,5 @@
 initialHashedPassword: ENC[AES256_GCM,data:Kv+LCUnVEBuOsH9eeU4b6UaUlhIr5zY8/Tbp4m4FQbgQj7lgWVCehoXtyyzOVzg/I6mbNFohGfP636SxeqvQsK4U2SETwkzXJA==,iv:WvzZhII/T+GWGsNe/GZy0bTh3VQySol8gx9wGpfH2VE=,tag:SvRKo5aOqayBPyzKKs19ZQ==,type:str]
+nixAccessTokens: ENC[AES256_GCM,data:iLiSh5xPYYENzDDw5FI7ioRoLyl52Zycie7MiMkbaoH5M3pSO8zsUb1aRNgaJAVZGcdjNZUbVr//POY3zXVPwmXBhDPN3FEjjmAziBDsqxkDT3ApuXCFonSPrpzFFZW0V17XQjPSu3Brolg4FE+ENNlPkkgD9clm1A==,iv:FdkVYoxTRRWa9aL7wHMycqXVdOHrw6oD54EHhsBXrm8=,tag:bqSMOesys2uhC7/ewVk3RA==,type:str]
 sops:
     age:
         - enc: |
@@ -19,8 +20,8 @@ sops:
             C60dlgSFJNA8cmnZETwulp+Gf5WWu++VIZE/dgl6Ny66bERrVFanLg==
             -----END AGE ENCRYPTED FILE-----
           recipient: age1s5gg7yr74wc7jwza3lccp2uazf969ndffckqp69qhze95wyf8y2qt455nc
-    lastmodified: "2026-06-24T18:07:08Z"
-    mac: ENC[AES256_GCM,data:8sUE8JCzcxi6gUPPdVFArlveJTcCeA94X5YMGOxsTTZxKSZmbk6sMxcqlGMn7OddL9zsZ0hQX/DBJ6KNTjXKs4xkS5fS7dTivqxchIPkkIGn82PGsa+4cPSOCfHVQ4EooBnMNeyFdCVDVHLR4aUaRXELVWLnI5pZ60U4RD7HUFU=,iv:LABKuwXZu4uuM+Syu4CygN4Lp1OQbmG6c4wHG6BDNZ4=,tag:3cPCh5CwncP8yULNGpPaLQ==,type:str]
+    lastmodified: "2026-11-03T22:13:56Z"
+    mac: ENC[AES256_GCM,data:tLBC4kVHAY3KqzsX3cw91UFtfitRlyzq15oGo2LXMQij0g+D0KgME/zuZ+8G7Ent1by8Fn9/7n4b2uLemeDq7Q1r8FIfA0nZBWX6Z7E9JTWICiOB3qxggNp0gzxOrI3qja/A9dlbjA7zUTeQTZY2/ZAPvkHQVNSTslkN3wtLZaQ=,iv:SpAUrYzF7vwHpImFtL27kzuurpQHxrXaRiQQ3Zs1RqI=,tag:GAvCawhm2OgUckJ9kEn6Ng==,type:str]
     pgp:
         - created_at: "2026-09-02T17:15:58Z"
           enc: |-
@@ -34,4 +35,4 @@ sops:
             -----END PGP MESSAGE-----
           fp: 8090C3C00389664083B61BFD84AB0927C4D76D3F
     unencrypted_suffix: _unencrypted
-    version: 3.13.1
+    version: 3.13.3

@@ -58,14 +58,11 @@
 					};
 
 					modules = [
-						./sops/system.nix
+						./sops
 						./hosts/deskel
 
 						home-manager.nixosModules.home-manager
 						{
-							home-manager.sharedModules = [
-								./sops/home.nix
-							];
 							home-manager.useGlobalPkgs = true;
 							home-manager.useUserPackages = true;
 							home-manager.users."raquel" = ./home/raquel.nix;
@@ -83,14 +80,11 @@
 					};
 
 					modules = [
-						./sops/system.nix
+						./sops
 						./hosts/biglab
 
 						home-manager.nixosModules.home-manager
 						{
-							home-manager.sharedModules = [
-								./sops/home.nix
-							];
 							home-manager.useGlobalPkgs = true;
 							home-manager.useUserPackages = true;
 							home-manager.users."raquel" = ./home/common.nix;
@@ -108,13 +102,11 @@
 					};
 
 					modules = [
+						./sops
 						./hosts/live-image
 
 						home-manager.nixosModules.home-manager
 						{
-							home-manager.sharedModules = [
-								./sops/home.nix
-							];
 							home-manager.useGlobalPkgs = true;
 							home-manager.useUserPackages = true;
 							home-manager.users."nixos" = ./home/common.nix;
