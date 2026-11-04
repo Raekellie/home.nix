@@ -1,11 +1,6 @@
 {pkgs, ...}: {
 	home = {
 		shell.enableShellIntegration = true;
-		shellAliases = {
-			# I really should consider configuring fish purely with Nix, without any config.fish
-			#"nixalias" = "nixos-rebuild --sudo --flake $HOME/dev/nix/home.nix";
-			#"nixalias-dev" = "nixalias --override-input dotfiles $HOME/dev/nix/dotfiles";
-		};
 	};
 
 	programs = {
