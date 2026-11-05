@@ -26,7 +26,7 @@
 				"create mask" = "0644";
 				"directory mask" = "0755";
 				"force user" = "samba-raquel";
-				"valid user" = "samba-raquel";
+				"valid users" = "samba-raquel";
 			};
 			"photo-library" = {
 				"path" = "/storage/shared/photo-library";
@@ -36,7 +36,7 @@
 				"create mask" = "0644";
 				"directory mask" = "0755";
 				"force user" = "samba-raquel";
-				"valid user" = "samba-raquel";
+				"valid users" = "samba-raquel";
 			};
 		};
 	};
