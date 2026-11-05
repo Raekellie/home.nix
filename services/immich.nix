@@ -1,8 +1,11 @@
 {
+	config,
 	pkgs,
 	pkgs-unstable,
 	...
-}: {
+}: let
+	impermanence = config.custom.impermanence;
+in {
 	# Default port: 2283
 	services.immich = {
 		enable = true;
@@ -25,6 +28,12 @@
 		enable = true;
 		extraPackages = with pkgs; [
 			vpl-gpu-rt
+		];
+	};
+
+	environment.persistence."${impermanence.persistPath}" = {
+		directories = [
+			"/var/lib/redis-immich"
 		];
 	};
 }
