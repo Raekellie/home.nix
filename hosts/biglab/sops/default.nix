@@ -6,6 +6,10 @@
 				sopsFile = ./samba-user-passwords.yaml;
 				neededForUsers = true;
 			};
+			"services-samba-user-password-photo-library" = {
+				sopsFile = ./samba-user-passwords.yaml;
+				neededForUsers = true;
+			};
 
 			# UPS
 			"services-ups-admin-password" = {

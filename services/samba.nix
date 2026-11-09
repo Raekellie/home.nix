@@ -35,8 +35,8 @@
 				"guest ok" = "no";
 				"create mask" = "0644";
 				"directory mask" = "0755";
-				"force user" = "samba-raquel";
-				"valid users" = "samba-raquel";
+				"force user" = "samba-photo-library";
+				"valid users" = "samba-photo-library";
 			};
 		};
 	};
@@ -48,11 +48,18 @@
 		hashedPasswordFile = config.sops.secrets.services-samba-user-password-raquel.path;
 		isNormalUser = true;
 	};
+	users.users."samba-photo-library" = {
+		description = "Write-access to Samba shares";
+		extraGroups = ["users"];
+		hashedPasswordFile = config.sops.secrets.services-samba-user-password-photo-library.path;
+		isNormalUser = true;
+	};
 	system.activationScripts = {
 		# The password is repeated twice with newline characters as `smbpasswd` requires a password confirmatio even in
 		# non-interactive mode where input is piped in through stdin.
 		"custom_samba_user_passwords".text = ''
       			/run/current-system/sw/bin/printf "$(/run/current-system/sw/bin/cat ${config.sops.secrets.services-samba-user-password-raquel.path})\n$(/run/current-system/sw/bin/cat ${config.sops.secrets.services-samba-user-password-raquel.path})\n" | /run/current-system/sw/bin/smbpasswd -sa samba-raquel
+      			/run/current-system/sw/bin/printf "$(/run/current-system/sw/bin/cat ${config.sops.secrets.services-samba-user-password-photo-library.path})\n$(/run/current-system/sw/bin/cat ${config.sops.secrets.services-samba-user-password-photo-library.path})\n" | /run/current-system/sw/bin/smbpasswd -sa samba-photo-library
     '';
 	};
 
